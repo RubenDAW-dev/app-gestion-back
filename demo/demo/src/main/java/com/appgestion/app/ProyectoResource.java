@@ -5,7 +5,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.appgestion.app.DTO.ProyectoAllDTO;
 import com.appgestion.app.DTO.ProyectoDTO;
+import com.appgestion.app.DTO.TrabajadorAllDTO;
 import com.appgestion.app.services.ProyectoService;
 
 import lombok.AllArgsConstructor;
@@ -53,4 +56,11 @@ public class ProyectoResource {
 		return new ResponseEntity<>(proyectodto, HttpStatus.CREATED);
 
 	}
+	@DeleteMapping("/delete/id")
+	public ResponseEntity<?> deleteProyecto (@PathVariable("id") Long id){
+		proyectoservice.deleteById(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+
+	}
+
 }

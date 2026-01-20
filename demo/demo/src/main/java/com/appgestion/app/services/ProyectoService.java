@@ -7,6 +7,7 @@ import com.appgestion.app.DTO.ProyectoAllDTO;
 import com.appgestion.app.DTO.ProyectoDTO;
 import com.appgestion.app.mappers.ProyectoMapper;
 import com.appgestion.app.model.ProyectoEntity;
+import com.appgestion.app.model.TrabajadorEntity;
 import com.appgestion.app.repo.ProyectoRepo;
 
 import lombok.AllArgsConstructor;
@@ -37,6 +38,12 @@ public class ProyectoService {
 	public void updateProyecto(ProyectoAllDTO proyectodto) {
 		ProyectoEntity proyecto = proyectorepo.findById(proyectodto.getId()).orElseThrow(() ->new RuntimeException("Proyecto no encontrado"));
 		proyectorepo.save(proyecto);
+	}
+
+
+	public void deleteById(Long id) {
+        ProyectoEntity proyecto = proyectorepo.findById(id).orElseThrow(() ->new RuntimeException("Proyecto no encontrado"));
+		proyectorepo.delete(proyecto);
 	}
 
 }

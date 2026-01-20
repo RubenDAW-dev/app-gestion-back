@@ -1,7 +1,5 @@
 package com.appgestion.app.services;
 
-import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,8 +12,10 @@ import com.appgestion.app.exception.UserNotFoundException;
 import com.appgestion.app.mappers.TrabajadorMapper;
 import com.appgestion.app.model.CategoriaEntity;
 import com.appgestion.app.model.TrabajadorEntity;
+import com.appgestion.app.model.UsuarioEntity;
 import com.appgestion.app.repo.CategoriaRepo;
 import com.appgestion.app.repo.TrabajadorRepo;
+import com.appgestion.app.repo.UsuarioRepo;
 
 import lombok.AllArgsConstructor;
 
@@ -26,6 +26,8 @@ public class TrabajadorService {
 	private final TrabajadorRepo trabajadorrepo;
 	private final TrabajadorMapper trabajadormapper;
     private final CategoriaRepo categoriarepo;
+    private final UsuarioRepo usuariorepo;
+  
 
 
 	
@@ -49,11 +51,10 @@ public class TrabajadorService {
 
 
 	public void deleteTrabajadorById(Long id) {
-		Optional<TrabajadorEntity>trabajador = trabajadorrepo.findById(id);
-		if (trabajador.isEmpty()) {
-			new UserNotFoundException("Trabajador no encontrado");
-		}
-		trabajadorrepo.deleteById(id);
+        TrabajadorEntity trabajador = trabajadorrepo.findById(id).orElseThrow(() ->new RuntimeException("Trabajador no encontrado"));
+        UsuarioEntity usuario = usuariorepo.findById(id).orElseThrow(() ->new RuntimeException("Usuario no encontrado"));
+		usuariorepo.delete(usuario);
+		trabajadorrepo.delete(trabajador);
 	}
 
 
