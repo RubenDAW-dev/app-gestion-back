@@ -11,6 +11,6 @@ public class TrabajadorFiltro {
 
 	private String texto;
 	private String estado;
-	private int id_categoria;
+	private Long id_categoria;
 	
 }

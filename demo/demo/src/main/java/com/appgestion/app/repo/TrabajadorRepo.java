@@ -16,25 +16,21 @@ public interface TrabajadorRepo extends JpaRepository<TrabajadorEntity, Long>{
 		    SELECT t
 		    FROM TrabajadorEntity t
 		    WHERE
-		        (
-		            :#{#filtro.texto} IS NULL OR
-		            LOWER(t.nombre) LIKE LOWER(CONCAT('%', :#{#filtro.texto}, '%')) OR
-		            LOWER(t.apellido) LIKE LOWER(CONCAT('%', :#{#filtro.texto}, '%')) OR
-		            t.DNI LIKE CONCAT('%', :#{#filtro.texto}, '%')
-		        )
+		        (:texto IS NULL OR :texto = '' OR 
+		         LOWER(t.nombre) LIKE LOWER(CONCAT('%', :texto, '%')) OR
+		         LOWER(t.apellido) LIKE LOWER(CONCAT('%', :texto, '%')) OR
+		         t.DNI LIKE CONCAT('%', :texto, '%'))
 		    AND
-		        (
-		            :#{#filtro.estado} IS NULL OR
-		            :#{#filtro.estado} = '' OR
-		            t.estado = :#{#filtro.estado}
-		        )
+		        (:estado IS NULL OR :estado = '' OR t.estado = :estado)
 		    AND
-		        (
-		            :#{#filtro.id_categoria} = 0 OR
-		            t.categoria.id = :#{#filtro.id_categoria}
-		        )
-		    """)
-	Page<TrabajadorEntity> findByFiltros(@Param("filtro") TrabajadorFiltro trabajadorfiltro,Pageable pageable);
+		        (:idCategoria IS NULL OR :idCategoria = 0 OR t.categoria.id = :idCategoria)
+		""")
+		Page<TrabajadorEntity> findByFiltros(
+		        @Param("texto") String texto,
+		        @Param("estado") String estado,
+		        @Param("idCategoria") Long idCategoria,
+		        Pageable pageable);
+
 
 
 	

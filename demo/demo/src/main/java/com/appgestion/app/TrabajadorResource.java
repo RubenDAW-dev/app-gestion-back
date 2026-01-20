@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.appgestion.app.DTO.TrabajadorAllDTO;
-import com.appgestion.app.DTO.TrabajadorCategoriaEntityDTO;
+import com.appgestion.app.DTO.TrabajadorCategoriaDTO;
 import com.appgestion.app.DTO.TrabajadorDTO;
 import com.appgestion.app.DTO.TrabajadorFiltro;
 import com.appgestion.app.services.TrabajadorService;
@@ -36,9 +36,9 @@ public class TrabajadorResource {
 	    return new ResponseEntity<>(saved, HttpStatus.CREATED);
 	}
 	@GetMapping("/all")
-	public ResponseEntity<Page<TrabajadorCategoriaEntityDTO>> getAllTrabajadores (@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "5") int size){
+	public ResponseEntity<Page<TrabajadorCategoriaDTO>> getAllTrabajadores (@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "5") int size){
 		Pageable pageable = PageRequest.of(page, size);
-		Page<TrabajadorCategoriaEntityDTO> trabajadores = trabajadorservice.findAllTrabajadores(pageable);
+		Page<TrabajadorCategoriaDTO> trabajadores = trabajadorservice.findAllTrabajadores(pageable);
 		return new ResponseEntity<>(trabajadores, HttpStatus.OK);
 	}
 	@GetMapping("/search")

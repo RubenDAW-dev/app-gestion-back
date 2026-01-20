@@ -14,23 +14,22 @@ import com.appgestion.app.model.CategoriaEntity;
 @Mapper(componentModel = "spring")
 public interface CategoriaMapper {
 
-    CategoriaDTO toDto(CategoriaEntity categoria);
+	CategoriaDTO toDto(CategoriaEntity entity);
 
-    @Mapping(target="id", ignore = true)
-    @Mapping(target="trabajadores", ignore = true)
-    CategoriaEntity toEntity(CategoriaDTO dto);
-    
-    CategoriaAllDTO EntitytoAll (CategoriaEntity entity);
-    
-    @Mapping(target="trabajadores", ignore = true)
-    CategoriaEntity AlltoEntity (CategoriaAllDTO alldto);
-    
+    CategoriaAllDTO toAllDto(CategoriaEntity entity);
+
     List<CategoriaAllDTO> toAllDTOList(List<CategoriaEntity> entities);
 
-    
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "trabajadores", ignore = true)
-    void updateEntityFromDTO(CategoriaAllDTO dto,@MappingTarget CategoriaEntity entity);
+    CategoriaEntity toEntity(CategoriaDTO dto);
+
+    @Mapping(target = "trabajadores", ignore = true)
+    CategoriaEntity toEntity(CategoriaAllDTO dto);
     
-    List<CategoriaNombresDTO> toNombresDTOList(List<CategoriaEntity> entities);
+    List<CategoriaNombresDTO> toNombresDTOList(List<CategoriaEntity> entities); 
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "trabajadores", ignore = true)
+    void updateEntityFromDTO(CategoriaAllDTO dto, @MappingTarget CategoriaEntity entity);
 }

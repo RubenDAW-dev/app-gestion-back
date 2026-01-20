@@ -3,9 +3,11 @@ package com.appgestion.app.services;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import com.appgestion.app.DTO.CategoriaAllDTO;
 import com.appgestion.app.DTO.CategoriaDTO;
 import com.appgestion.app.DTO.CategoriaNombresDTO;
@@ -30,7 +32,7 @@ public class CategoriaService {
 	}
 
 	public Page<CategoriaAllDTO> findAllCategorias(Pageable pageable) {
-		return categoriarepo.findAll(pageable).map(categoriaMapper::EntitytoAll);
+		return categoriarepo.findAll(pageable).map(categoriaMapper::toAllDto);
 	}
 
 	// public CategoriaAllDTO findCategoriaById(Long id) {
@@ -57,8 +59,7 @@ public class CategoriaService {
 	}
 
 	public Page<CategoriaAllDTO> searchByNombre(String texto, Pageable pageable) {
-		return categoriarepo.findByNombreContainingIgnoreCase(texto, pageable)
-	            .map(categoriaMapper::EntitytoAll);
+		return categoriarepo.findByNombreContainingIgnoreCase(texto, pageable).map(categoriaMapper::toAllDto);
 	}
 
 	public List<CategoriaNombresDTO> findNombresCategoria() {

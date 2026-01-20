@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.appgestion.app.DTO.TrabajadorAllDTO;
-import com.appgestion.app.DTO.TrabajadorCategoriaEntityDTO;
+import com.appgestion.app.DTO.TrabajadorCategoriaDTO;
 import com.appgestion.app.DTO.TrabajadorDTO;
 import com.appgestion.app.DTO.TrabajadorFiltro;
 import com.appgestion.app.exception.UserNotFoundException;
@@ -38,8 +38,8 @@ public class TrabajadorService {
 	}
 
 
-	public Page<TrabajadorCategoriaEntityDTO> findAllTrabajadores(Pageable pageable) {
-		return trabajadorrepo.findAll(pageable).map(trabajadormapper::toAllCategoriaDto);
+	public Page<TrabajadorCategoriaDTO> findAllTrabajadores(Pageable pageable) {
+		return trabajadorrepo.findAll(pageable).map(trabajadormapper::toCategoriaDto);
 	}
 
 
@@ -76,7 +76,12 @@ public class TrabajadorService {
 		return trabajadordto;
 
 	}
-	public Page<TrabajadorAllDTO> search(TrabajadorFiltro filtro,Pageable pageable){
-		return trabajadorrepo.findByFiltros(filtro,pageable).map(trabajadormapper::toAllDto);
+	public Page<TrabajadorAllDTO> search(TrabajadorFiltro filtro, Pageable pageable) {
+	    return trabajadorrepo.findByFiltros(
+	            filtro.getTexto(),
+	            filtro.getEstado(),
+	            filtro.getId_categoria(),
+	            pageable
+	    ).map(trabajadormapper::toAllDto);
 	}
 }
