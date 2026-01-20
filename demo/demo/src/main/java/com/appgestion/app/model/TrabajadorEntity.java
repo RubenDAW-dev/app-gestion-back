@@ -38,7 +38,7 @@ public class TrabajadorEntity {
 	@Column (name= "DNI",unique = true)
 	private String DNI;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn (name= "id_categoria", insertable = true, updatable = true, nullable = false)
 	private CategoriaEntity categoria;
 	
@@ -49,7 +49,7 @@ public class TrabajadorEntity {
     private Set<RegistroJornadaEntity> jornada = new HashSet<>();
 	
 
-    @OneToOne(mappedBy = "trabajador", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "trabajador", fetch = FetchType.EAGER)
     private UsuarioEntity usuario;
 
 }

@@ -2,10 +2,11 @@ package com.appgestion.app.repo;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import com.appgestion.app.DTO.TrabajadorFiltro;
+
 import com.appgestion.app.model.TrabajadorEntity;
 
 public interface TrabajadorRepo extends JpaRepository<TrabajadorEntity, Long>{
@@ -32,6 +33,7 @@ public interface TrabajadorRepo extends JpaRepository<TrabajadorEntity, Long>{
 		        Pageable pageable);
 
 
-
+    @EntityGraph(attributePaths = {"categoria", "usuario"})
+    Page<TrabajadorEntity> findAll(Pageable pageable);
 	
 }

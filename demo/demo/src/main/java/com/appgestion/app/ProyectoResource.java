@@ -7,10 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.appgestion.app.DTO.ProyectoAllDTO;
 import com.appgestion.app.DTO.ProyectoDTO;
 import com.appgestion.app.services.ProyectoService;
@@ -44,5 +46,11 @@ public class ProyectoResource {
 		Pageable pageable = PageRequest.of(page, size);
 		Page<ProyectoAllDTO> result = proyectoservice.searchByNombre(texto,pageable);
 		return ResponseEntity.ok(result);
+	}
+	@PutMapping("/update")
+	public ResponseEntity<ProyectoAllDTO> updateProyecto(@RequestBody ProyectoAllDTO proyectodto){
+		proyectoservice.updateProyecto(proyectodto);
+		return new ResponseEntity<>(proyectodto, HttpStatus.CREATED);
+
 	}
 }

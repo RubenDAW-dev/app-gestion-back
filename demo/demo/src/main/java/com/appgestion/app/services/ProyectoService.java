@@ -33,4 +33,10 @@ public class ProyectoService {
 		return proyectorepo.findByNombreContainingIgnoreCase(texto,pageable).map(proyectomapper::EntitytoAll);
 	}
 
+
+	public void updateProyecto(ProyectoAllDTO proyectodto) {
+		ProyectoEntity proyecto = proyectorepo.findById(proyectodto.getId()).orElseThrow(() ->new RuntimeException("Proyecto no encontrado"));
+		proyectorepo.save(proyecto);
+	}
+
 }

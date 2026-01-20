@@ -62,7 +62,7 @@ public class TrabajadorService {
         trabajadormapper.updateEntityFromDTO(dto, trabajador);
 
         if (dto.getId_categoria() != null) {
-            CategoriaEntity categoria = categoriarepo.findById(dto.getId_categoria()).orElseThrow(() ->new RuntimeException("Categoria no encontrada"));
+            CategoriaEntity categoria = categoriarepo.findById(dto.getId_categoria()).orElseThrow(() ->new RuntimeException("Trabajador no encontrada"));
             trabajador.setCategoria(categoria);
         }
 
