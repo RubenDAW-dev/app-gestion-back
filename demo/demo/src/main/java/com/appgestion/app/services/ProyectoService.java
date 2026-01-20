@@ -37,7 +37,9 @@ public class ProyectoService {
 
 
 	public void updateProyecto(ProyectoAllDTO proyectodto) {
-		ProyectoEntity proyecto = proyectorepo.findById(proyectodto.getId()).orElseThrow(() ->new RuntimeException("Proyecto no encontrado"));
+		ProyectoEntity proyecto = proyectorepo.findById(proyectodto.getId()).orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+		proyectomapper.updateEntityFromDTO(proyectodto,proyecto);
+		
 		proyectorepo.save(proyecto);
 	}
 

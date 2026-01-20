@@ -15,6 +15,7 @@ public interface ProyectoRepo extends JpaRepository<ProyectoEntity, Long> {
 	@Query("SELECT p FROM ProyectoEntity p WHERE LOWER(p.nombre) LIKE LOWER(concat('%', :nombre,'%'))")
     Page<ProyectoEntity> findByNombreContainingIgnoreCase(@Param("nombre") String nombre, Pageable pageable);
 
+	
     @Query("""
             SELECT p 
             FROM ProyectoEntity p
@@ -33,6 +34,7 @@ public interface ProyectoRepo extends JpaRepository<ProyectoEntity, Long> {
             AND
             (:margen_beneficio_min IS NULL OR p.margen_beneficio >= :margen_beneficio_min)
         """)
+    
         Page<ProyectoEntity> findByFiltros(
             @Param("texto") String texto,
             @Param("estado") String estado,

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import com.appgestion.app.DTO.ProyectoAllDTO;
 import com.appgestion.app.DTO.ProyectoDTO;
@@ -24,4 +25,7 @@ public interface ProyectoMapper {
     ProyectoEntity AlltoEntity (ProyectoAllDTO alldto);
     
     List<ProyectoAllDTO> toAllDTOList (List<ProyectoEntity> entities);
+
+    @Mapping(target = "tareas",ignore = true)
+	void updateEntityFromDTO(ProyectoAllDTO proyectodto, @MappingTarget ProyectoEntity proyecto);
 }
