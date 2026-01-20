@@ -1,5 +1,7 @@
 package com.appgestion.app.services;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,12 +33,14 @@ public class TrabajadorService {
 
 
 	
-	public TrabajadorDTO addTrabajador(TrabajadorDTO trabajadordto) {
+	public TrabajadorAllDTO addTrabajador(TrabajadorDTO trabajadordto) {
         TrabajadorEntity trabajador = trabajadormapper.toEntity(trabajadordto);
         CategoriaEntity categoria = categoriarepo.findById(trabajadordto.getId_categoria()).orElseThrow(() ->new RuntimeException("Categoria no encontrada"));
         trabajador.setCategoria(categoria);
         trabajadorrepo.save(trabajador);
-		return trabajadordto;
+        
+        
+		return trabajadormapper.toAllDto(trabajador);
 	}
 
 
@@ -52,8 +56,10 @@ public class TrabajadorService {
 
 	public void deleteTrabajadorById(Long id) {
         TrabajadorEntity trabajador = trabajadorrepo.findById(id).orElseThrow(() ->new RuntimeException("Trabajador no encontrado"));
-        UsuarioEntity usuario = usuariorepo.findById(id).orElseThrow(() ->new RuntimeException("Usuario no encontrado"));
-		usuariorepo.delete(usuario);
+		Optional<UsuarioEntity> usuario = usuariorepo.findById(id);
+		if (usuario.isPresent()) {
+			usuariorepo.deleteById(id);
+		}
 		trabajadorrepo.delete(trabajador);
 	}
 

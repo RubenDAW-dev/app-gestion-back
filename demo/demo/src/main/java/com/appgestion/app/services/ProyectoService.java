@@ -46,4 +46,10 @@ public class ProyectoService {
 		proyectorepo.delete(proyecto);
 	}
 
+
+	public ProyectoAllDTO findProyectoById(Long id) {
+        ProyectoEntity proyecto = proyectorepo.findById(id).orElseThrow(() ->new RuntimeException("Proyecto no encontrado"));
+        return proyectomapper.EntitytoAll(proyecto);
+	}
+
 }

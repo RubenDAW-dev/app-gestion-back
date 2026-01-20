@@ -31,8 +31,8 @@ public class TrabajadorResource {
 	private final TrabajadorService trabajadorservice;
 
 	@PostMapping("/add")
-	public ResponseEntity<TrabajadorDTO> addTrabajador(@RequestBody TrabajadorDTO trabajadordto){
-	    TrabajadorDTO saved = trabajadorservice.addTrabajador(trabajadordto);
+	public ResponseEntity<TrabajadorAllDTO> addTrabajador(@RequestBody TrabajadorDTO trabajadordto){
+		TrabajadorAllDTO saved = trabajadorservice.addTrabajador(trabajadordto);
 	    return new ResponseEntity<>(saved, HttpStatus.CREATED);
 	}
 	@GetMapping("/all")
