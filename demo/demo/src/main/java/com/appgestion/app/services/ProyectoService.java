@@ -3,11 +3,12 @@ package com.appgestion.app.services;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import com.appgestion.app.DTO.ProyectoAllDTO;
 import com.appgestion.app.DTO.ProyectoDTO;
+import com.appgestion.app.DTO.ProyectoFiltro;
 import com.appgestion.app.mappers.ProyectoMapper;
 import com.appgestion.app.model.ProyectoEntity;
-import com.appgestion.app.model.TrabajadorEntity;
 import com.appgestion.app.repo.ProyectoRepo;
 
 import lombok.AllArgsConstructor;
@@ -50,6 +51,20 @@ public class ProyectoService {
 	public ProyectoAllDTO findProyectoById(Long id) {
         ProyectoEntity proyecto = proyectorepo.findById(id).orElseThrow(() ->new RuntimeException("Proyecto no encontrado"));
         return proyectomapper.EntitytoAll(proyecto);
+	}
+
+
+	public Page<ProyectoAllDTO> search(ProyectoFiltro filtro, Pageable pageable) {
+	    return proyectorepo.findByFiltros(
+	            filtro.getTexto(),
+	            filtro.getEstado(),
+	            filtro.getFecha_ini_desde(),
+	            filtro.getFecha_ini_hasta(),
+	            filtro.getFecha_fin_desde(),
+	            filtro.getFecha_fin_hasta(),
+	            filtro.getMargen_beneficio_min()
+	            , pageable
+	    ).map(proyectomapper::EntitytoAll);
 	}
 
 }
