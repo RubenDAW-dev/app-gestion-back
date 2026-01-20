@@ -1,6 +1,5 @@
 package com.appgestion.app.DTO;
 
-import com.appgestion.app.model.CategoriaEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,11 +8,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TrabajadorAllDTO {
+public class TrabajadorCategoriaEntityDTO {
+
 	private Long id;
 	private String nombre;
 	private String apellido;
 	private String DNI;
-	private Long id_categoria;
+	private CategoriaAllDTO categoria;
 	private String estado;
 }

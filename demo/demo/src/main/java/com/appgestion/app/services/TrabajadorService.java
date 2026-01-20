@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.appgestion.app.DTO.TrabajadorAllDTO;
+import com.appgestion.app.DTO.TrabajadorCategoriaEntityDTO;
 import com.appgestion.app.DTO.TrabajadorDTO;
 import com.appgestion.app.DTO.TrabajadorFiltro;
 import com.appgestion.app.exception.UserNotFoundException;
@@ -37,8 +38,8 @@ public class TrabajadorService {
 	}
 
 
-	public Page<TrabajadorAllDTO> findAllTrabajadores(Pageable pageable) {
-		return trabajadorrepo.findAll(pageable).map(trabajadormapper::toAllDto);
+	public Page<TrabajadorCategoriaEntityDTO> findAllTrabajadores(Pageable pageable) {
+		return trabajadorrepo.findAll(pageable).map(trabajadormapper::toAllCategoriaDto);
 	}
 
 
