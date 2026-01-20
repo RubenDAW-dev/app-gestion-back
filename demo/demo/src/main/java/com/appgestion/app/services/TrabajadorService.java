@@ -76,12 +76,12 @@ public class TrabajadorService {
 		return trabajadordto;
 
 	}
-	public Page<TrabajadorAllDTO> search(TrabajadorFiltro filtro, Pageable pageable) {
+	public Page<TrabajadorCategoriaDTO> search(TrabajadorFiltro filtro, Pageable pageable) {
 	    return trabajadorrepo.findByFiltros(
 	            filtro.getTexto(),
 	            filtro.getEstado(),
 	            filtro.getId_categoria(),
 	            pageable
-	    ).map(trabajadormapper::toAllDto);
+	    ).map(trabajadormapper::toCategoriaDto);
 	}
 }

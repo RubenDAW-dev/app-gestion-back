@@ -42,9 +42,9 @@ public class TrabajadorResource {
 		return new ResponseEntity<>(trabajadores, HttpStatus.OK);
 	}
 	@GetMapping("/search")
-	public ResponseEntity<Page<TrabajadorAllDTO>> getTrabajadorFiltro (@ModelAttribute TrabajadorFiltro trabajadorfiltro,@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "5") int size){
+	public ResponseEntity<Page<TrabajadorCategoriaDTO>> getTrabajadorFiltro (@ModelAttribute TrabajadorFiltro trabajadorfiltro,@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "5") int size){
 		Pageable pageable = PageRequest.of(page, size);
-		Page<TrabajadorAllDTO> trabajadores = trabajadorservice.search(trabajadorfiltro,pageable);
+		Page<TrabajadorCategoriaDTO> trabajadores = trabajadorservice.search(trabajadorfiltro,pageable);
 		return new ResponseEntity<>(trabajadores, HttpStatus.OK);
 	
 	}
