@@ -35,4 +35,7 @@ public class UsuarioEntity {
 
     @Column(name = "rol")
     private boolean rol;
+    
+    @Column(name = "cambio_contrasena")
+    private boolean cambio_contrasena;
 }

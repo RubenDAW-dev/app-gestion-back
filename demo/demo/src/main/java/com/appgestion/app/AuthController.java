@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.appgestion.app.DTO.LoginRequestDTO;
 import com.appgestion.app.DTO.LoginResponseDTO;
+import com.appgestion.app.DTO.UpdateConstrasena;
 import com.appgestion.app.services.UsuarioService;
 
 import lombok.AllArgsConstructor;
@@ -24,5 +25,9 @@ public class AuthController {
         LoginResponseDTO response = usuarioService.login(request);
         return ResponseEntity.ok(response);
     }
-
+    @PostMapping("/update-password")
+    public ResponseEntity<String> updatePassword(@RequestBody UpdateConstrasena request) {
+        usuarioService.updatePassword(request);
+        return ResponseEntity.ok("Contraseña actualizada correctamente");
+    }
 }

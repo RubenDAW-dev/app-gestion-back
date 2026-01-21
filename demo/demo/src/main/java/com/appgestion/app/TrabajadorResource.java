@@ -54,12 +54,12 @@ public class TrabajadorResource {
 		return new ResponseEntity<>(trabajadordto, HttpStatus.CREATED);
 	}
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> deleteTrabajador(@PathVariable("id") Long id){
+	public ResponseEntity<?> deleteTrabajador(@PathVariable Long id){
 		trabajadorservice.deleteTrabajadorById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	@GetMapping("/find/{id}")
-	public ResponseEntity<TrabajadorAllDTO> getCategoriaById (@PathVariable("id") Long id){
+	public ResponseEntity<TrabajadorAllDTO> getCategoriaById (@PathVariable Long id){
 		TrabajadorAllDTO trabajador = trabajadorservice.findTrabajadorById(id);
 		return new ResponseEntity<>(trabajador, HttpStatus.OK);
 		}

@@ -44,7 +44,7 @@ public class UsuarioResource {
 		return new ResponseEntity<>(usuariodto,HttpStatus.CREATED);	
 	}
 	@DeleteMapping("delete/{id}")
-	public ResponseEntity<?> deleteUsuario(@PathVariable ("id") Long id){
+	public ResponseEntity<?> deleteUsuario(@PathVariable Long id){
 		usuarioservice.deleteUsuarioById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

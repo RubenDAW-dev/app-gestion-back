@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginResponseDTO {
-    private Long id_trabajador;
-    private boolean rol;
-    private String nombre;
-    private boolean cambio_contrasena;
+public class UpdateConstrasena {
+    private Long idUsuario;
+    private String nuevaContrasena;
 }
+	

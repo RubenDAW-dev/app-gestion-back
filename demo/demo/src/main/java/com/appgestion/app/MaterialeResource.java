@@ -26,7 +26,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/material")
-public class MaterialesResource {
+public class MaterialeResource {
 	private final MaterialService materialservice;
 
 	
@@ -55,7 +55,7 @@ public class MaterialesResource {
 		return new ResponseEntity<>(materialdto,HttpStatus.CREATED);
 	}
 	@DeleteMapping ("/delete/{id}")
-	public ResponseEntity<?> deleteMaterial (@PathVariable ("id") Long id){
+	public ResponseEntity<?> deleteMaterial (@PathVariable Long id){
 		materialservice.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

@@ -1,7 +1,5 @@
 package com.appgestion.app.DTO;
 
-import com.appgestion.app.model.CategoriaEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -47,7 +47,7 @@ public interface TrabajadorMapper {
 
     List<TrabajadorCategoriaDTO> toCategoriaDTOList(List<TrabajadorEntity> entities);
 
-
+ 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "usuario", ignore = true)
     @Mapping(target = "jornada", ignore = true)

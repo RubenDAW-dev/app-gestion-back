@@ -57,13 +57,13 @@ public class ProyectoResource {
 
 	}
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> deleteProyecto (@PathVariable("id") Long id){
+	public ResponseEntity<?> deleteProyecto (@PathVariable Long id){
 		proyectoservice.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 
 	}
 	@GetMapping("/find/{id}")
-	public ResponseEntity<ProyectoAllDTO> getProyectoById (@PathVariable("id") Long id){
+	public ResponseEntity<ProyectoAllDTO> getProyectoById (@PathVariable Long id){
 		ProyectoAllDTO proyecto = proyectoservice.findProyectoById(id);
 		return new ResponseEntity<>(proyecto, HttpStatus.OK);
 		}

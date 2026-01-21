@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.appgestion.app.DTO.LoginRequestDTO;
 import com.appgestion.app.DTO.LoginResponseDTO;
+import com.appgestion.app.DTO.UpdateConstrasena;
 import com.appgestion.app.DTO.UsuarioDTO;
 import com.appgestion.app.mappers.UsuarioMapper;
 import com.appgestion.app.model.TrabajadorEntity;
@@ -62,7 +63,17 @@ public class UsuarioService {
         }
         TrabajadorEntity trabajador = usuario.getTrabajador();
 
-        return new LoginResponseDTO(trabajador.getId(),usuario.isRol(),trabajador.getNombre());
+        return new LoginResponseDTO(trabajador.getId(),usuario.isRol(),trabajador.getNombre(),usuario.isCambio_contrasena());
+	}
+
+	public void updatePassword(UpdateConstrasena request) {
+	    UsuarioEntity usuario = usuariorepo.findById(request.getIdUsuario()).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+	    usuario.setContrasena(request.getNuevaContrasena());
+
+	    usuario.setCambio_contrasena(true);
+
+	    usuariorepo.save(usuario);
 	}
 
 }

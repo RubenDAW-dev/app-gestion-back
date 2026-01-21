@@ -57,7 +57,7 @@ public class CategoriaResource {
 		return new ResponseEntity<>(categoriadto, HttpStatus.CREATED);
 	}
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> deleteCategoria(@PathVariable("id") Long id){
+	public ResponseEntity<?> deleteCategoria(@PathVariable Long id){
 		categoriaservice.deleteCategoriaById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
