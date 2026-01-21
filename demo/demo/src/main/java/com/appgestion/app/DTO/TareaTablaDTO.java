@@ -13,5 +13,6 @@ public class TareaTablaDTO {
 	private LocalDate fecha_ini;
 	private LocalDate fecha_fin;
 	private String tipo;
+	private int horas_estimadas;
 
 }

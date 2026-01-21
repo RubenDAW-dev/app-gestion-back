@@ -1,8 +1,6 @@
 package com.appgestion.app.DTO;
 
 import java.time.LocalDate;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,8 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TareaDTO {
-	private Long id;
+public class TareaAddDTO {
 	private String descripcion;
 	private String estado;
 	private LocalDate fecha_fin;
@@ -22,5 +19,4 @@ public class TareaDTO {
 	private String tipo;
 	private Long id_proyecto;
 	private Long tarea_padre;
-	private List<Long> subtareas_ids;
 }

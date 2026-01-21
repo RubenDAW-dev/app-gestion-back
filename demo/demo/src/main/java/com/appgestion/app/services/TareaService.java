@@ -4,11 +4,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.appgestion.app.DTO.TareaAddDTO;
 import com.appgestion.app.DTO.TareaAllDTO;
 import com.appgestion.app.DTO.TareaDTO;
-import com.appgestion.app.DTO.TareaTablaDTO;
+import com.appgestion.app.DTO.TareaFiltro;
+import com.appgestion.app.DTO.TareaLazyDTO;
 import com.appgestion.app.mappers.TareaMapper;
-import com.appgestion.app.model.CategoriaEntity;
 import com.appgestion.app.model.ProyectoEntity;
 import com.appgestion.app.model.TareaEntity;
 import com.appgestion.app.repo.ProyectoRepo;
@@ -24,8 +25,8 @@ public class TareaService {
 	private TareaMapper tareamapper;
 	private ProyectoRepo proyectorepo;
 
-	public TareaDTO addTarea(TareaDTO tareadto) {
-		TareaEntity tarea = tareamapper.toEntity(tareadto);
+	public TareaAddDTO addTarea(TareaAddDTO tareadto) {
+		TareaEntity tarea = tareamapper.AddtoEntity(tareadto);
 		
 	    ProyectoEntity proyecto = proyectorepo.findById(tareadto.getId_proyecto()).orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
 	    tarea.setId_proyecto(proyecto);
@@ -37,8 +38,8 @@ public class TareaService {
 	    return tareadto;
 	}
 
-	public Page<TareaTablaDTO> findAllTareas(Pageable pageable) {
-		return tarearepo.findAll(pageable).map(tareamapper::toTablaDto);
+	public Page<TareaDTO> findAllTareas(Pageable pageable) {
+		return tarearepo.findAll(pageable).map(tareamapper::toDto);
 	}
 
 	public void updateTarea(TareaAllDTO tareadto) {
@@ -58,4 +59,32 @@ public class TareaService {
         tarearepo.save(tarea);
         
 	}
+
+	public void deleteById(Long id) {
+		TareaEntity tarea = tarearepo.findById(id).orElseThrow(() ->new RuntimeException("Tarea no encontrado"));
+		tarearepo.delete(tarea);
+	}
+
+	public TareaLazyDTO findTareaById(Long id) {
+		TareaEntity tarea =  tarearepo.findById(id).orElseThrow(() ->new RuntimeException("Tarea no encontrado"));
+		TareaLazyDTO dto = tareamapper.toLazyDto(tarea);
+		dto.setSubtareas( tarea.getSubtareas().stream() .map(tareamapper::toLazyDto) .toList() );
+		return dto;
+	}
+
+	public Page<TareaDTO> search(TareaFiltro filtro, Pageable pageable) {
+	    return tarearepo.findByFiltros(
+	            filtro.getTerm(),
+	            filtro.getTipo(),
+	            filtro.getEstado(),
+	            filtro.getFecha_inicio_desde(),
+	            filtro.getFecha_inicio_hasta(),
+	            filtro.getFecha_fin_desde(),
+	            filtro.getFecha_fin_hasta(),
+	            filtro.getPadre(),
+	            filtro.getProyecto(),
+	            pageable
+	    ).map(tareamapper::toDto);
+	}
+
 }
