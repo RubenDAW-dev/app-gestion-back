@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class TareasMaterialId implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	private Long id_tarea;
 	private Long id_material;
 }
