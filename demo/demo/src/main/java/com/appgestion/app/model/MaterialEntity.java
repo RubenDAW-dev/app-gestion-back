@@ -31,7 +31,7 @@ public class MaterialEntity {
 	private String referencia;
 	
 	@Column (name= "numero_factura")
-	private int numero_factura;
+	private Long numero_factura;
 	
 	@Column (name= "precio_unitario")
 	private float precio_unitario;

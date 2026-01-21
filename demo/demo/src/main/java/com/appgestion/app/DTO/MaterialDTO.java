@@ -13,7 +13,7 @@ public class MaterialDTO {
 	
 	private String referencia;
 	
-	private int numero_factura;
+	private Long numero_factura;
 
 	private float precio_unitario;	
 

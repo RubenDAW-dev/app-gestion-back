@@ -49,7 +49,7 @@ public class TrabajadorResource {
 	
 	}
 	@PutMapping("/update")
-	public ResponseEntity<TrabajadorAllDTO> updateCategoria(@RequestBody TrabajadorAllDTO trabajadordto){
+	public ResponseEntity<TrabajadorAllDTO> updateTrabajador(@RequestBody TrabajadorAllDTO trabajadordto){
 		trabajadorservice.updateTrabajador(trabajadordto);
 		return new ResponseEntity<>(trabajadordto, HttpStatus.CREATED);
 	}

@@ -14,5 +14,5 @@ public class TrabajadorDTO {
 	private String DNI;
 	private Long id_categoria;
 	private String estado;
-
+	private boolean rol;
 }

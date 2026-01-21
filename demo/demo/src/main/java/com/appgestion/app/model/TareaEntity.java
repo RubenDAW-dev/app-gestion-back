@@ -66,15 +66,15 @@ public class TareaEntity {
     @JsonBackReference
     private TareaEntity tareaPadre;
 
-    @OneToMany(mappedBy = "tareaPadre", orphanRemoval = false)
+    @OneToMany(mappedBy = "tareaPadre", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     @JsonManagedReference
     private Set<TareaEntity> subtareas = new HashSet<>();
     
-    @OneToMany(mappedBy = "id_tarea", orphanRemoval = true)
+    @OneToMany(mappedBy = "id_tarea", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TareaMaterialEntity> materiales = new HashSet<>();
     
-    @OneToMany(mappedBy = "id_tarea", orphanRemoval = true)
+    @OneToMany(mappedBy = "id_tarea", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RegistroJornadaEntity> jornada = new HashSet<>();
 
 }

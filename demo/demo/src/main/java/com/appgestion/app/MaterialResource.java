@@ -26,7 +26,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/material")
-public class MaterialeResource {
+public class MaterialResource {
 	private final MaterialService materialservice;
 
 	

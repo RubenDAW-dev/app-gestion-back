@@ -10,6 +10,7 @@ import com.appgestion.app.DTO.TrabajadorAllDTO;
 import com.appgestion.app.DTO.TrabajadorCategoriaDTO;
 import com.appgestion.app.DTO.TrabajadorDTO;
 import com.appgestion.app.DTO.TrabajadorFiltro;
+import com.appgestion.app.DTO.UsuarioDTO;
 import com.appgestion.app.exception.UserNotFoundException;
 import com.appgestion.app.mappers.TrabajadorMapper;
 import com.appgestion.app.model.CategoriaEntity;
@@ -29,6 +30,7 @@ public class TrabajadorService {
 	private final TrabajadorMapper trabajadormapper;
     private final CategoriaRepo categoriarepo;
     private final UsuarioRepo usuariorepo;
+    private final UsuarioService usuarioservice;
   
 
 
@@ -37,9 +39,15 @@ public class TrabajadorService {
         TrabajadorEntity trabajador = trabajadormapper.toEntity(trabajadordto);
         CategoriaEntity categoria = categoriarepo.findById(trabajadordto.getId_categoria()).orElseThrow(() ->new RuntimeException("Categoria no encontrada"));
         trabajador.setCategoria(categoria);
-        trabajadorrepo.save(trabajador);
+        TrabajadorEntity entidad = trabajadorrepo.save(trabajador);
         
+        UsuarioDTO usuario = new UsuarioDTO();
+        usuario.setId_trabajador(entidad.getId());
+        usuario.setUsuario(entidad.getDNI());
+        usuario.setContrasena("1234");
+        usuario.setRol(trabajadordto.isRol());
         
+        usuarioservice.addUsuario(usuario);
 		return trabajadormapper.toAllDto(trabajador);
 	}
 
