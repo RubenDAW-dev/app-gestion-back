@@ -40,6 +40,7 @@ public interface JornadaMapper {
         if (trabajador == null) return null;
         return new TrabajadorNombreDTO(trabajador.getId(), trabajador.getDNI());
     }
+    
     @Mapping(target = "id_tarea", ignore = true)
     @Mapping(target = "id_trabajador", ignore = true)
 	void updateEntityfromDTO(JornadaAllDTO jornadadto,@MappingTarget JornadaEntity jornada);
