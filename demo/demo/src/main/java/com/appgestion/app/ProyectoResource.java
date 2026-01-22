@@ -63,7 +63,6 @@ public class ProyectoResource {
 	public ResponseEntity<?> deleteProyecto (@PathVariable Long id){
 		proyectoservice.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
-
 	}
 	@GetMapping("/find/{id}")
 	public ResponseEntity<ProyectoAllDTO> getProyectoById (@PathVariable Long id){
@@ -75,6 +74,7 @@ public class ProyectoResource {
 		Long cant = proyectoservice.countProyectos();
 		return new ResponseEntity<>(cant, HttpStatus.OK);
 	}
+	
 	@GetMapping("/all/nombres")
 	public ResponseEntity<List<ProyectoNombresDTO>> getNombresProyecto(){
 		List<ProyectoNombresDTO> lista = proyectoservice.findNombresProyecto();
