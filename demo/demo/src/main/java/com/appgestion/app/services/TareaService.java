@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 @Service
 public class TareaService {
 	
-	private final TareaRepo tarearepo;
+	private TareaRepo tarearepo;
 	private TareaMapper tareamapper;
 	private ProyectoRepo proyectorepo;
 

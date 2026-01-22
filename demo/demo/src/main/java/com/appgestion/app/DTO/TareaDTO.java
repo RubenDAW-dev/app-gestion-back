@@ -20,7 +20,7 @@ public class TareaDTO {
 	private String nombre;
 	private String observaciones;
 	private String tipo;
-	private Long id_proyecto;
-	private Long tarea_padre;
+	private ProyectoDTOTarea id_proyecto;
+	private TareaDTOTarea tarea_padre;
 	private List<Long> subtareas_ids;
 }

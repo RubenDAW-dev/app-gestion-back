@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Table(name = "RegistroJornada")
-public class RegistroJornadaEntity {
+public class JornadaEntity {
 	@Id
 	@Column(nullable= false, updatable = false, name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -46,7 +46,7 @@ public class TrabajadorEntity {
 	private String estado;
 
     @OneToMany(mappedBy = "id_trabajador", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<RegistroJornadaEntity> jornada = new HashSet<>();
+    private Set<JornadaEntity> jornada = new HashSet<>();
 	
 
     @OneToOne(mappedBy = "trabajador", fetch = FetchType.EAGER)

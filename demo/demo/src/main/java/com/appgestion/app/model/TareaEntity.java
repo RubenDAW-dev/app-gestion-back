@@ -77,6 +77,6 @@ public class TareaEntity {
     private Set<TareaMaterialEntity> materiales = new HashSet<>();
     
     @OneToMany(mappedBy = "id_tarea", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<RegistroJornadaEntity> jornada = new HashSet<>();
+    private Set<JornadaEntity> jornada = new HashSet<>();
 
 }
