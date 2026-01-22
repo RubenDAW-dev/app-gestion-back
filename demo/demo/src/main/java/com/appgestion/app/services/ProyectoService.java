@@ -69,4 +69,9 @@ public class ProyectoService {
 	    ).map(proyectomapper::EntitytoAll);
 	}
 
+
+	public Long countProyectos() {
+		return proyectorepo.count();
+	}
+
 }

@@ -37,6 +37,7 @@ public interface TareaRepo extends JpaRepository<TareaEntity, Long> {
 		    AND
 		        (:proyecto IS NULL OR :proyecto = 0 OR t.id_proyecto.id = :proyecto)
 		""")
+	@EntityGraph(attributePaths = { "id_proyecto" })
 	Page<TareaEntity> findByFiltros(
 			@Param("term") String term, 
 			@Param("tipo") String tipo,

@@ -67,4 +67,9 @@ public class ProyectoResource {
 		ProyectoAllDTO proyecto = proyectoservice.findProyectoById(id);
 		return new ResponseEntity<>(proyecto, HttpStatus.OK);
 		}
+	@GetMapping ("/count")
+	public ResponseEntity<Long> getCountProyectos(){
+		Long cant = proyectoservice.countProyectos();
+		return new ResponseEntity<>(cant, HttpStatus.OK);
+	}
 }

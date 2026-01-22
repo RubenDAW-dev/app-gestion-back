@@ -99,4 +99,9 @@ public class TrabajadorService {
 	            pageable
 	    ).map(trabajadormapper::toCategoriaDto);
 	}
+
+
+	public Long countTrabajador() {
+		return trabajadorrepo.count();
+	}
 }

@@ -63,4 +63,9 @@ public class TrabajadorResource {
 		TrabajadorAllDTO trabajador = trabajadorservice.findTrabajadorById(id);
 		return new ResponseEntity<>(trabajador, HttpStatus.OK);
 		}
+	@GetMapping ("/count")
+	public ResponseEntity<Long> getCountProyectos(){
+		Long cant = trabajadorservice.countTrabajador();
+		return new ResponseEntity<>(cant, HttpStatus.OK);
+	}
 }
