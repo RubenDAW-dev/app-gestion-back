@@ -1,5 +1,7 @@
 package com.appgestion.app;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.appgestion.app.DTO.ProyectoNombresDTO;
 import com.appgestion.app.DTO.TareaAddDTO;
 import com.appgestion.app.DTO.TareaAllDTO;
 import com.appgestion.app.DTO.TareaDTO;
 import com.appgestion.app.DTO.TareaFiltro;
 import com.appgestion.app.DTO.TareaLazyDTO;
+import com.appgestion.app.DTO.TareaNombresDTO;
 import com.appgestion.app.services.TareaService;
 
 import lombok.AllArgsConstructor;
@@ -66,6 +70,11 @@ public class TareaResource {
 		Page<TareaDTO> result = tareaservice.search(tareafiltro,pageable);
 		return ResponseEntity.ok(result);
 	}
-
+	
+	@GetMapping("/all/nombres")
+	public ResponseEntity<List<TareaNombresDTO>> getNombresTarea(@RequestParam int id){
+		List<TareaNombresDTO> lista = tareaservice.findNombresTarea(id);
+		return ResponseEntity.ok(lista);
+	}
 
 }

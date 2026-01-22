@@ -1,5 +1,7 @@
 package com.appgestion.app;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.appgestion.app.DTO.ProyectoAllDTO;
 import com.appgestion.app.DTO.ProyectoDTO;
 import com.appgestion.app.DTO.ProyectoFiltro;
+import com.appgestion.app.DTO.ProyectoNombresDTO;
 import com.appgestion.app.services.ProyectoService;
 
 import lombok.AllArgsConstructor;
@@ -71,5 +74,10 @@ public class ProyectoResource {
 	public ResponseEntity<Long> getCountProyectos(){
 		Long cant = proyectoservice.countProyectos();
 		return new ResponseEntity<>(cant, HttpStatus.OK);
+	}
+	@GetMapping("/all/nombres")
+	public ResponseEntity<List<ProyectoNombresDTO>> getNombresProyecto(){
+		List<ProyectoNombresDTO> lista = proyectoservice.findNombresProyecto();
+		return ResponseEntity.ok(lista);
 	}
 }

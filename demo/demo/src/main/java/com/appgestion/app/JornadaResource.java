@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 public class JornadaResource {
 
 	private final JornadaService jornadaservice;
+	
 	@PostMapping("/add")
 	public ResponseEntity<JornadaDTO> addJornada(@RequestBody JornadaDTO jornadadto){
 		jornadaservice.addJornada(jornadadto);

@@ -1,5 +1,7 @@
 package com.appgestion.app.services;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.appgestion.app.DTO.ProyectoAllDTO;
 import com.appgestion.app.DTO.ProyectoDTO;
 import com.appgestion.app.DTO.ProyectoFiltro;
+import com.appgestion.app.DTO.ProyectoNombresDTO;
 import com.appgestion.app.mappers.ProyectoMapper;
 import com.appgestion.app.model.ProyectoEntity;
 import com.appgestion.app.repo.ProyectoRepo;
@@ -72,6 +75,13 @@ public class ProyectoService {
 
 	public Long countProyectos() {
 		return proyectorepo.count();
+	}
+
+
+	public List<ProyectoNombresDTO> findNombresProyecto() {
+		List <ProyectoEntity> entities = proyectorepo.findAll();
+		List<ProyectoNombresDTO> dto = proyectomapper.toNombresDTOList(entities);
+		return dto;
 	}
 
 }

@@ -8,8 +8,12 @@ import com.appgestion.app.model.JornadaEntity;
 
 @Mapper(componentModel = "spring")
 public interface JornadaMapper {
-	//@Mapping(source = "id_trabajador",target = "id_trabajador.id")
-	//JornadaEntity toEntity (JornadaDTO dto);
+    @Mapping(target = "id_tarea", ignore = true)
+    @Mapping(target = "id_trabajador", ignore = true)
+    @Mapping(target = "id", ignore = true)
+	JornadaEntity toEntity (JornadaDTO dto);
 	
-	//JornadaDTO toDto (JornadaEntity entity);
+    @Mapping(target = "id_tarea", ignore = true)
+    @Mapping(target = "id_trabajador", ignore = true)
+	JornadaDTO toDto (JornadaEntity entity);
 }

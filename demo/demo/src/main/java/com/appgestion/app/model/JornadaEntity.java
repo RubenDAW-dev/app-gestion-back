@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "RegistroJornada")
+@Table(name = "registro_jornada")
 public class JornadaEntity {
 	@Id
 	@Column(nullable= false, updatable = false, name = "id")

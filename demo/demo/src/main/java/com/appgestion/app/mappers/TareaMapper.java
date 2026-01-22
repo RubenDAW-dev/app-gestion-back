@@ -12,6 +12,7 @@ import com.appgestion.app.DTO.TareaAllDTO;
 import com.appgestion.app.DTO.TareaDTO;
 import com.appgestion.app.DTO.TareaDTOTarea;
 import com.appgestion.app.DTO.TareaLazyDTO;
+import com.appgestion.app.DTO.TareaNombresDTO;
 import com.appgestion.app.DTO.TareaTablaDTO;
 import com.appgestion.app.model.ProyectoEntity;
 import com.appgestion.app.model.TareaEntity;
@@ -70,6 +71,9 @@ public interface TareaMapper {
 	@Mapping(target = "materiales", ignore = true)
 	@Mapping(target = "jornada", ignore = true)
 	TareaEntity AddtoEntity(TareaAddDTO dto);
+
+
+	List<TareaNombresDTO> toNombresDTOList(List<TareaEntity> entities);
 
 
 }

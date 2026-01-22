@@ -1,5 +1,7 @@
 package com.appgestion.app.services;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import com.appgestion.app.DTO.TareaAllDTO;
 import com.appgestion.app.DTO.TareaDTO;
 import com.appgestion.app.DTO.TareaFiltro;
 import com.appgestion.app.DTO.TareaLazyDTO;
+import com.appgestion.app.DTO.TareaNombresDTO;
 import com.appgestion.app.mappers.TareaMapper;
 import com.appgestion.app.model.ProyectoEntity;
 import com.appgestion.app.model.TareaEntity;
@@ -85,6 +88,12 @@ public class TareaService {
 	            filtro.getProyecto(),
 	            pageable
 	    ).map(tareamapper::toDto);
+	}
+
+	public List<TareaNombresDTO> findNombresTarea(int id) {
+		List<TareaEntity> entities = tarearepo.findById_proyecto(id);
+		List<TareaNombresDTO> dto = tareamapper.toNombresDTOList(entities);
+		return dto;
 	}
 
 }
