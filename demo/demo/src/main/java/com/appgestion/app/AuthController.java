@@ -26,8 +26,8 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
     @PostMapping("/update-password")
-    public ResponseEntity<String> updatePassword(@RequestBody UpdateConstrasena request) {
-        usuarioService.updatePassword(request);
-        return ResponseEntity.ok("Contraseña actualizada correctamente");
+    public ResponseEntity<LoginResponseDTO> updatePassword(@RequestBody UpdateConstrasena request) {
+    	LoginResponseDTO response = usuarioService.updatePassword(request);
+        return ResponseEntity.ok(response);
     }
 }

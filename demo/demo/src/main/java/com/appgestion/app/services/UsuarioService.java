@@ -66,14 +66,17 @@ public class UsuarioService {
         return new LoginResponseDTO(trabajador.getId(),usuario.isRol(),trabajador.getNombre(),usuario.isCambio_contrasena());
 	}
 
-	public void updatePassword(UpdateConstrasena request) {
-	    UsuarioEntity usuario = usuariorepo.findById(request.getIdUsuario()).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+	public LoginResponseDTO updatePassword(UpdateConstrasena request) {
+	    UsuarioEntity usuario = usuariorepo.findById(request.getId_usuario()).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-	    usuario.setContrasena(request.getNuevaContrasena());
-
+	    TrabajadorEntity trabajador = usuario.getTrabajador();
+	    
+	    usuario.setContrasena(request.getNueva_contrasena());
 	    usuario.setCambio_contrasena(true);
-
 	    usuariorepo.save(usuario);
+
+        return new LoginResponseDTO(trabajador.getId(),usuario.isRol(),trabajador.getNombre(),usuario.isCambio_contrasena());
+
 	}
 
 }

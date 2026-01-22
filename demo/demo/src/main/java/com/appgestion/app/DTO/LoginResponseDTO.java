@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class LoginResponseDTO {
     private Long id_trabajador;
     private boolean rol;
-    private String nombre;
+    private String usuario;
     private boolean cambio_contrasena;
 }

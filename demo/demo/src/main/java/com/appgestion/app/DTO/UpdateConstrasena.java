@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateConstrasena {
-    private Long idUsuario;
-    private String nuevaContrasena;
+    private Long id_usuario;
+    private String nueva_contrasena;
 }
 	
