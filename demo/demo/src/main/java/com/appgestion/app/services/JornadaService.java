@@ -63,4 +63,9 @@ public class JornadaService {
 		jornadarepo.save(jornada);
 	}
 
+	public void deleteById(Long id) {
+		JornadaEntity jornada = jornadarepo.findById(id).orElseThrow(() -> new RuntimeException("Jornada no encontrada"));
+		jornadarepo.delete(jornada);
+	}
+
 }

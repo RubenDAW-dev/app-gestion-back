@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JornadaNombresDTO {
+	private Long id;
 	private LocalDate fecha;
 	private int horas;
 	private boolean validado;
