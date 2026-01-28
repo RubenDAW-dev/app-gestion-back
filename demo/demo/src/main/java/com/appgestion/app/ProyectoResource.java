@@ -22,6 +22,7 @@ import com.appgestion.app.DTO.ProyectoAllDTO;
 import com.appgestion.app.DTO.ProyectoDTO;
 import com.appgestion.app.DTO.ProyectoFiltro;
 import com.appgestion.app.DTO.ProyectoNombresDTO;
+import com.appgestion.app.DTO.ProyectoTareasDTO;
 import com.appgestion.app.services.ProyectoService;
 
 import lombok.AllArgsConstructor;
@@ -65,8 +66,8 @@ public class ProyectoResource {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	@GetMapping("/find/{id}")
-	public ResponseEntity<ProyectoAllDTO> getProyectoById (@PathVariable Long id){
-		ProyectoAllDTO proyecto = proyectoservice.findProyectoById(id);
+	public ResponseEntity<ProyectoTareasDTO> getProyectoById (@PathVariable Long id){
+		ProyectoTareasDTO proyecto = proyectoservice.findProyectoById(id);
 		return new ResponseEntity<>(proyecto, HttpStatus.OK);
 		}
 	@GetMapping ("/count")

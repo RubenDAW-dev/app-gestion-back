@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.appgestion.app.DTO.TareaDTO;
+import com.appgestion.app.DTO.TareaJornadaDTO;
 import com.appgestion.app.DTO.TrabajadorAllDTO;
 import com.appgestion.app.DTO.TrabajadorCategoriaDTO;
 import com.appgestion.app.DTO.TrabajadorDTO;
 import com.appgestion.app.DTO.TrabajadorFiltro;
+import com.appgestion.app.DTO.TrabajadorUsuarioDTO;
 import com.appgestion.app.services.TrabajadorService;
 
 import lombok.AllArgsConstructor;
@@ -59,13 +62,19 @@ public class TrabajadorResource {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	@GetMapping("/find/{id}")
-	public ResponseEntity<TrabajadorAllDTO> getCategoriaById (@PathVariable Long id){
-		TrabajadorAllDTO trabajador = trabajadorservice.findTrabajadorById(id);
+	public ResponseEntity<TrabajadorCategoriaDTO> getTrabajador (@PathVariable Long id){
+		TrabajadorCategoriaDTO trabajador = trabajadorservice.findTrabajadorById(id);
 		return new ResponseEntity<>(trabajador, HttpStatus.OK);
 		}
 	@GetMapping ("/count")
 	public ResponseEntity<Long> getCountProyectos(){
 		Long cant = trabajadorservice.countTrabajador();
 		return new ResponseEntity<>(cant, HttpStatus.OK);
+	}
+	@GetMapping("/{id}/tareas")
+	public ResponseEntity<Page<TareaJornadaDTO>> getTareasTrabajador(@PathVariable Long id,@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "5") int size){
+		Pageable pageable = PageRequest.of(page, size);
+		Page<TareaJornadaDTO> lista = trabajadorservice.getTareasDeTrabajador(id,pageable);
+		return ResponseEntity.ok(lista);
 	}
 }

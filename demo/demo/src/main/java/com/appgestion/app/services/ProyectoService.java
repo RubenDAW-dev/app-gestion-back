@@ -10,7 +10,10 @@ import com.appgestion.app.DTO.ProyectoAllDTO;
 import com.appgestion.app.DTO.ProyectoDTO;
 import com.appgestion.app.DTO.ProyectoFiltro;
 import com.appgestion.app.DTO.ProyectoNombresDTO;
+import com.appgestion.app.DTO.ProyectoTareasDTO;
+import com.appgestion.app.DTO.TareaLazyDTO;
 import com.appgestion.app.mappers.ProyectoMapper;
+import com.appgestion.app.mappers.TareaMapper;
 import com.appgestion.app.model.ProyectoEntity;
 import com.appgestion.app.repo.ProyectoRepo;
 
@@ -21,6 +24,7 @@ import lombok.AllArgsConstructor;
 public class ProyectoService {
 	private final ProyectoRepo proyectorepo;
 	private final ProyectoMapper proyectomapper;
+	private final TareaMapper tareamapper;
 	
 	
 	public void addProyecto(ProyectoDTO proyectodto) {
@@ -53,10 +57,26 @@ public class ProyectoService {
 	}
 
 
-	public ProyectoAllDTO findProyectoById(Long id) {
-        ProyectoEntity proyecto = proyectorepo.findById(id).orElseThrow(() ->new RuntimeException("Proyecto no encontrado"));
-        return proyectomapper.EntitytoAll(proyecto);
+	public ProyectoTareasDTO findProyectoById(Long id) {
+	    ProyectoEntity proyecto = proyectorepo.findById(id)
+	        .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+	    ProyectoTareasDTO dto = proyectomapper.entityToProyectoTareasDTO(proyecto);
+
+	    List<TareaLazyDTO> tareasPrincipales = proyecto.getTareas().stream()
+	        .filter(t -> t.getTareaPadre() == null)
+	        .map(t -> {
+	            TareaLazyDTO tareaDTO = tareamapper.toLazyDto(t);
+	            tareaDTO.setSubtareas(null);
+	            return tareaDTO;
+	        })
+	        .toList();
+
+	    dto.setTareas_principales(tareasPrincipales);
+
+	    return dto;
 	}
+
 
 
 	public Page<ProyectoAllDTO> search(ProyectoFiltro filtro, Pageable pageable) {

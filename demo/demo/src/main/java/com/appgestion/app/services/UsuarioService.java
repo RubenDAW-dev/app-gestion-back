@@ -63,7 +63,7 @@ public class UsuarioService {
         }
         TrabajadorEntity trabajador = usuario.getTrabajador();
 
-        return new LoginResponseDTO(trabajador.getId(),usuario.isRol(),trabajador.getNombre(),usuario.isCambio_contrasena());
+        return new LoginResponseDTO(trabajador.getId(),usuario.isRol(),usuario.getUsuario(),usuario.isCambio_contrasena());
 	}
 
 	public LoginResponseDTO updatePassword(UpdateConstrasena request) {

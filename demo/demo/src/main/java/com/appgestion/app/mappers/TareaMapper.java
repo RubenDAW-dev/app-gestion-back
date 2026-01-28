@@ -11,9 +11,11 @@ import com.appgestion.app.DTO.TareaAddDTO;
 import com.appgestion.app.DTO.TareaAllDTO;
 import com.appgestion.app.DTO.TareaDTO;
 import com.appgestion.app.DTO.TareaDTOTarea;
+import com.appgestion.app.DTO.TareaJornadaDTO;
 import com.appgestion.app.DTO.TareaLazyDTO;
 import com.appgestion.app.DTO.TareaNombresDTO;
 import com.appgestion.app.DTO.TareaTablaDTO;
+import com.appgestion.app.model.JornadaEntity;
 import com.appgestion.app.model.ProyectoEntity;
 import com.appgestion.app.model.TareaEntity;
 
@@ -76,4 +78,23 @@ public interface TareaMapper {
 	List<TareaNombresDTO> toNombresDTOList(List<TareaEntity> entities);
 
 
+    @Mapping(source = "id_tarea.id", target = "id")
+    @Mapping(source = "id_tarea.descripcion", target = "descripcion")
+    @Mapping(source = "id_tarea.estado", target = "estado")
+    @Mapping(source = "id_tarea.fecha_ini", target = "fecha_ini")
+    @Mapping(source = "id_tarea.fecha_fin", target = "fecha_fin")
+    @Mapping(source = "id_tarea.horas_estimadas", target = "horas_estimadas")
+    @Mapping(source = "id_tarea.nombre", target = "nombre")
+    @Mapping(source = "id_tarea.observaciones", target = "observaciones")
+    @Mapping(source = "id_tarea.tipo", target = "tipo")
+    @Mapping(source = "id_tarea.id_proyecto", target = "id_proyecto")
+    @Mapping(source = "id_tarea.tareaPadre", target = "tarea_padre")
+    TareaJornadaDTO toTareaTrabajadorDTO(JornadaEntity jornada);
+
+	
+	
+	
+	
+	
+	
 }

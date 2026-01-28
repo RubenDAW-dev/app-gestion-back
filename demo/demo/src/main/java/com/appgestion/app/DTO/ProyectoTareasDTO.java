@@ -1,6 +1,7 @@
 package com.appgestion.app.DTO;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProyectoAllDTO {
+public class ProyectoTareasDTO {
 	public Long id;
     private String descripcion;
     private String estado;
@@ -18,4 +19,5 @@ public class ProyectoAllDTO {
     private float margen_beneficio;
     private String nombre;
     
+    private List <TareaLazyDTO> tareas_principales;
 }

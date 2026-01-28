@@ -31,34 +31,58 @@ import lombok.AllArgsConstructor;
 public class JornadaResource {
 
 	private final JornadaService jornadaservice;
-	
+
 	@PostMapping("/add")
-	public ResponseEntity<JornadaDTO> addJornada(@RequestBody JornadaDTO jornadadto){
+	public ResponseEntity<JornadaDTO> addJornada(@RequestBody JornadaDTO jornadadto) {
 		jornadaservice.addJornada(jornadadto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 
 	}
+
 	@GetMapping("/all")
-	public ResponseEntity<Page<JornadaNombresDTO>> getAllJornadas(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "5") int size){
+	public ResponseEntity<Page<JornadaNombresDTO>> getAllJornadas(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "5") int size) {
 		Pageable pageable = PageRequest.of(page, size);
 		Page<JornadaNombresDTO> jornadas = jornadaservice.findAllJornadas(pageable);
 		return new ResponseEntity<>(jornadas, HttpStatus.OK);
 	}
+
 	@GetMapping("/search")
-	public ResponseEntity<Page<JornadaNombresDTO>> searchJornada(@ModelAttribute JornadaFiltro jornadafiltro,@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "5") int size) {
+	public ResponseEntity<Page<JornadaNombresDTO>> searchJornada(@ModelAttribute JornadaFiltro jornadafiltro,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
 		Pageable pageable = PageRequest.of(page, size);
-		Page<JornadaNombresDTO> result = jornadaservice.search(jornadafiltro,pageable);
+		Page<JornadaNombresDTO> result = jornadaservice.search(jornadafiltro, pageable);
 		return ResponseEntity.ok(result);
 	}
+
 	@PutMapping("/update")
-	public ResponseEntity<JornadaAllDTO> updateProyecto(@RequestBody JornadaAllDTO jornadadto){
+	public ResponseEntity<JornadaAllDTO> updateProyecto(@RequestBody JornadaAllDTO jornadadto) {
 		jornadaservice.updateJornada(jornadadto);
 		return new ResponseEntity<>(jornadadto, HttpStatus.CREATED);
 
 	}
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> deleteJornada (@PathVariable Long id){
+	public ResponseEntity<?> deleteJornada(@PathVariable Long id) {
 		jornadaservice.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+
+	@GetMapping("/count/no_validadas")
+	public ResponseEntity<Long> count_no_validadas() {
+		Long count = jornadaservice.count_no_validadas();
+		return new ResponseEntity<>(count, HttpStatus.OK);
+
+	}
+
+	@GetMapping("/all/no_validadas")
+	public ResponseEntity<Page<JornadaNombresDTO>> getNoValidadas(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "5") int size) {
+		Pageable pageable = PageRequest.of(page, size);
+
+		Page<JornadaNombresDTO> lista = jornadaservice.getNoValidadas(pageable);
+		return new ResponseEntity<>(lista, HttpStatus.OK);
+
+	}
+
 }

@@ -9,6 +9,7 @@ import org.mapstruct.MappingTarget;
 import com.appgestion.app.DTO.ProyectoAllDTO;
 import com.appgestion.app.DTO.ProyectoDTO;
 import com.appgestion.app.DTO.ProyectoNombresDTO;
+import com.appgestion.app.DTO.ProyectoTareasDTO;
 import com.appgestion.app.model.ProyectoEntity;
 
 @Mapper(componentModel = "spring")
@@ -31,4 +32,8 @@ public interface ProyectoMapper {
 	void updateEntityFromDTO(ProyectoAllDTO proyectodto, @MappingTarget ProyectoEntity proyecto);
 
 	List<ProyectoNombresDTO> toNombresDTOList(List<ProyectoEntity> entities);
+	
+	
+	@Mapping(target = "tareas_principales", ignore = true)
+	ProyectoTareasDTO entityToProyectoTareasDTO (ProyectoEntity entity);
 }

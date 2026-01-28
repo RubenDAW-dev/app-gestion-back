@@ -3,20 +3,24 @@ package com.appgestion.app.services;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.appgestion.app.DTO.TareaJornadaDTO;
 import com.appgestion.app.DTO.TrabajadorAllDTO;
 import com.appgestion.app.DTO.TrabajadorCategoriaDTO;
 import com.appgestion.app.DTO.TrabajadorDTO;
 import com.appgestion.app.DTO.TrabajadorFiltro;
 import com.appgestion.app.DTO.UsuarioDTO;
 import com.appgestion.app.exception.UserNotFoundException;
+import com.appgestion.app.mappers.TareaMapper;
 import com.appgestion.app.mappers.TrabajadorMapper;
 import com.appgestion.app.model.CategoriaEntity;
 import com.appgestion.app.model.TrabajadorEntity;
 import com.appgestion.app.model.UsuarioEntity;
 import com.appgestion.app.repo.CategoriaRepo;
+import com.appgestion.app.repo.JornadaRepo;
 import com.appgestion.app.repo.TrabajadorRepo;
 import com.appgestion.app.repo.UsuarioRepo;
 
@@ -31,6 +35,8 @@ public class TrabajadorService {
     private final CategoriaRepo categoriarepo;
     private final UsuarioRepo usuariorepo;
     private final UsuarioService usuarioservice;
+    private final TareaMapper tareamapper;
+    private final JornadaRepo jornadarepo;
   
 
 
@@ -85,9 +91,9 @@ public class TrabajadorService {
     }
 
 
-	public TrabajadorAllDTO findTrabajadorById(Long id) {
+	public TrabajadorCategoriaDTO findTrabajadorById(Long id) {
 		TrabajadorEntity trabajador = trabajadorrepo.findById(id).orElseThrow(() -> new UserNotFoundException("Trabajador con id "+ id +" no se ha encontrado"));
-		TrabajadorAllDTO trabajadordto = trabajadormapper.toAllDto(trabajador);
+		TrabajadorCategoriaDTO trabajadordto = trabajadormapper.toCategoriaDto(trabajador);
 		return trabajadordto;
 
 	}
@@ -104,4 +110,11 @@ public class TrabajadorService {
 	public Long countTrabajador() {
 		return trabajadorrepo.count();
 	}
+
+
+    public Page<TareaJornadaDTO> getTareasDeTrabajador(Long trabajadorId,Pageable pageable) {
+
+        return jornadarepo.findJornadasByTrabajador(trabajadorId, pageable)
+                           .map(tareamapper::toTareaTrabajadorDTO);
+    }
 }

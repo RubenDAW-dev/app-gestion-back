@@ -1,5 +1,7 @@
 package com.appgestion.app.services;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,12 +29,16 @@ public class JornadaService {
 	private TrabajadorRepo trabajorrepo;
 
 	public void addJornada(JornadaDTO jornadadto) {
-			JornadaEntity jornada = jornadamapper.toEntity(jornadadto);
-			TareaEntity tarea = tarearepo.findById(jornadadto.getId_tarea()).orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
-			TrabajadorEntity trabajador = trabajorrepo.findById(jornadadto.getId_trabajador()).orElseThrow(() -> new RuntimeException("Trabajador no encontrado"));
+		JornadaEntity jornada = jornadamapper.toEntity(jornadadto);
+		TareaEntity tarea = tarearepo.findById(jornadadto.getId_tarea())
+				.orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
+		TrabajadorEntity trabajador = trabajorrepo.findById(jornadadto.getId_trabajador())
+				.orElseThrow(() -> new RuntimeException("Trabajador no encontrado"));
 
-			jornada.setId_tarea(tarea);
-			jornada.setId_trabajador(trabajador);
+		jornada.setId_tarea(tarea);
+		jornada.setId_trabajador(trabajador);
+		
+		jornadarepo.save(jornada);
 
 	}
 
@@ -42,30 +48,39 @@ public class JornadaService {
 
 	public Page<JornadaNombresDTO> search(JornadaFiltro filtro, Pageable pageable) {
 		// TODO Auto-generated method stub
-		return jornadarepo.findByFiltros(
-				filtro.getFecha_desde(),
-				filtro.getFecha_hasta(),
-				filtro.isValidado(),
-				pageable
-				).map(jornadamapper::toNombresDto);
+		return jornadarepo
+				.findByFiltros(filtro.getFecha_desde(), filtro.getFecha_hasta(), filtro.isValidado(), pageable)
+				.map(jornadamapper::toNombresDto);
 	}
 
 	public void updateJornada(JornadaAllDTO jornadadto) {
-		JornadaEntity jornada = jornadarepo.findById(jornadadto.getId()).orElseThrow(() -> new RuntimeException("Jornada no encontrada"));
-		jornadamapper.updateEntityfromDTO(jornadadto,jornada);
-		
-		TrabajadorEntity trabajador = trabajorrepo.findById(jornadadto.getId_trabajador()).orElseThrow(() -> new RuntimeException("Trabajador no encontrado"));
-		TareaEntity tarea = tarearepo.findById(jornadadto.getId_tarea()).orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
+		JornadaEntity jornada = jornadarepo.findById(jornadadto.getId())
+				.orElseThrow(() -> new RuntimeException("Jornada no encontrada"));
+		jornadamapper.updateEntityfromDTO(jornadadto, jornada);
+
+		TrabajadorEntity trabajador = trabajorrepo.findById(jornadadto.getId_trabajador())
+				.orElseThrow(() -> new RuntimeException("Trabajador no encontrado"));
+		TareaEntity tarea = tarearepo.findById(jornadadto.getId_tarea())
+				.orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
 
 		jornada.setId_tarea(tarea);
 		jornada.setId_trabajador(trabajador);
-		
+
 		jornadarepo.save(jornada);
 	}
 
 	public void deleteById(Long id) {
-		JornadaEntity jornada = jornadarepo.findById(id).orElseThrow(() -> new RuntimeException("Jornada no encontrada"));
+		JornadaEntity jornada = jornadarepo.findById(id)
+				.orElseThrow(() -> new RuntimeException("Jornada no encontrada"));
 		jornadarepo.delete(jornada);
+	}
+
+	public long count_no_validadas() {
+		return jornadarepo.countByValidadoFalse();
+	}
+
+	public Page<JornadaNombresDTO> getNoValidadas(Pageable pageable) {
+		return jornadarepo.findByValidado(false, pageable).map(jornadamapper::toNombresDto);
 	}
 
 }

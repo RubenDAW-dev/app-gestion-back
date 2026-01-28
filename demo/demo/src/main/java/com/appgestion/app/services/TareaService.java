@@ -15,8 +15,10 @@ import com.appgestion.app.DTO.TareaNombresDTO;
 import com.appgestion.app.mappers.TareaMapper;
 import com.appgestion.app.model.ProyectoEntity;
 import com.appgestion.app.model.TareaEntity;
+import com.appgestion.app.repo.JornadaRepo;
 import com.appgestion.app.repo.ProyectoRepo;
 import com.appgestion.app.repo.TareaRepo;
+import com.appgestion.app.repo.TrabajadorRepo;
 
 import lombok.AllArgsConstructor;
 
@@ -27,6 +29,8 @@ public class TareaService {
 	private TareaRepo tarearepo;
 	private TareaMapper tareamapper;
 	private ProyectoRepo proyectorepo;
+	private JornadaRepo jornadarepo;
+	private TrabajadorRepo trabajadorrepo;
 
 	public TareaAddDTO addTarea(TareaAddDTO tareadto) {
 		TareaEntity tarea = tareamapper.AddtoEntity(tareadto);
@@ -95,5 +99,6 @@ public class TareaService {
 		List<TareaNombresDTO> dto = tareamapper.toNombresDTOList(entities);
 		return dto;
 	}
+
 
 }
