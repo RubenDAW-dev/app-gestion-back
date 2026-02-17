@@ -7,8 +7,8 @@ import org.mapstruct.MappingTarget;
 import com.appgestion.app.DTO.UsuarioDTO;
 import com.appgestion.app.model.UsuarioEntity;
 
-@Mapper(componentModel = "spring")
 
+@Mapper(componentModel = "spring")
 public interface UsuarioMapper {
 
 	@Mapping(source = "trabajador.id", target = "id_trabajador")
