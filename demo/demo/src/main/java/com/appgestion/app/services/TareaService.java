@@ -100,10 +100,9 @@ public class TareaService {
 		return dto;
 	}
 
-	public TareaNombresDTO getNombreTareaById(Long id) {
+	public String getNombreTareaById(Long id) {
 		TareaEntity tarea = tarearepo.findById(id).orElseThrow(() ->new RuntimeException("Tarea no encontrado"));
-		TareaNombresDTO dto = new TareaNombresDTO(tarea.getId(), tarea.getNombre());
-		return dto;
+		return tarea.getNombre();
 	}
 
 }
