@@ -81,4 +81,9 @@ public class ProyectoResource {
 		List<ProyectoNombresDTO> lista = proyectoservice.findNombresProyecto();
 		return ResponseEntity.ok(lista);
 	}
+	@GetMapping("/{id}/nombre")
+	public ResponseEntity<String> getNombreProyecto(@PathVariable Long id){
+		String nombre = proyectoservice.findNombreProyectoById(id);
+		return ResponseEntity.ok(nombre);
+	}
 }

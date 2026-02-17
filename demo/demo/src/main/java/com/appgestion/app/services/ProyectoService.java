@@ -104,4 +104,10 @@ public class ProyectoService {
 		return dto;
 	}
 
+
+	public String findNombreProyectoById(Long id) {
+		ProyectoEntity proyecto = proyectorepo.findById(id).orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+		return proyecto.getNombre();
+	}
+
 }
