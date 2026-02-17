@@ -74,5 +74,11 @@ public class TareaResource {
 		List<TareaNombresDTO> lista = tareaservice.findNombresTarea(id);
 		return ResponseEntity.ok(lista);
 	}
+	
+	@GetMapping("/nombre/{id}")
+	public ResponseEntity<TareaNombresDTO> getNombreTareaById(@PathVariable Long id){
+		TareaNombresDTO tarea = tareaservice.getNombreTareaById(id);
+		return ResponseEntity.ok(tarea);
+	}
 
 }
