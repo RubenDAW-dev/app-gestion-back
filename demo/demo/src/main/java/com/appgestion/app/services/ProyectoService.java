@@ -67,6 +67,7 @@ public class ProyectoService {
 	        .filter(t -> t.getTareaPadre() == null)
 	        .map(t -> {
 	            TareaLazyDTO tareaDTO = tareamapper.toLazyDto(t);
+	            tareaDTO.setNum_subtareas(t.getSubtareas() != null ? t.getSubtareas().size() : 0);
 	            tareaDTO.setSubtareas(null);
 	            return tareaDTO;
 	        })

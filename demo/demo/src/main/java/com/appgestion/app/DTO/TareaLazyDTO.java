@@ -25,5 +25,6 @@ public class TareaLazyDTO {
     private Long id_proyecto;
     private Long tarea_padre;
 
+    private int num_subtareas;
     private List<TareaLazyDTO> subtareas;
 }

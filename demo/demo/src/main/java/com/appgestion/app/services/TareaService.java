@@ -78,6 +78,7 @@ public class TareaService {
 		TareaEntity tarea =  tarearepo.findById(id).orElseThrow(() ->new RuntimeException("Tarea no encontrado"));
 		TareaLazyDTO dto = tareamapper.toLazyDto(tarea);
 		dto.setSubtareas( tarea.getSubtareas().stream() .map(tareamapper::toLazyDto) .toList() );
+		dto.setNum_subtareas(tarea.getSubtareas().size());
 		return dto;
 	}
 
