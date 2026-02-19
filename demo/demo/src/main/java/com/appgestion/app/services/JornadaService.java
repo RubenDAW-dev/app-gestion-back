@@ -10,6 +10,7 @@ import com.appgestion.app.DTO.JornadaAllDTO;
 import com.appgestion.app.DTO.JornadaDTO;
 import com.appgestion.app.DTO.JornadaFiltro;
 import com.appgestion.app.DTO.JornadaNombresDTO;
+import com.appgestion.app.DTO.JornadaValidarDTO;
 import com.appgestion.app.mappers.JornadaMapper;
 import com.appgestion.app.model.JornadaEntity;
 import com.appgestion.app.model.TareaEntity;
@@ -79,8 +80,8 @@ public class JornadaService {
 		return jornadarepo.countByValidadoFalse();
 	}
 
-	public Page<JornadaNombresDTO> getNoValidadas(Pageable pageable) {
-		return jornadarepo.findByValidado(false, pageable).map(jornadamapper::toNombresDto);
+	public Page<JornadaValidarDTO> getNoValidadas(Pageable pageable) {
+		return jornadarepo.findByValidado(false, pageable).map(jornadamapper::toValidarDto);
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 
 import com.appgestion.app.DTO.ProyectoDTOTarea;
 import com.appgestion.app.DTO.TareaAddDTO;
@@ -15,6 +16,7 @@ import com.appgestion.app.DTO.TareaJornadaDTO;
 import com.appgestion.app.DTO.TareaLazyDTO;
 import com.appgestion.app.DTO.TareaNombresDTO;
 import com.appgestion.app.DTO.TareaTablaDTO;
+import com.appgestion.app.DTO.TareaValidarDTO;
 import com.appgestion.app.model.JornadaEntity;
 import com.appgestion.app.model.ProyectoEntity;
 import com.appgestion.app.model.TareaEntity;
@@ -77,7 +79,7 @@ public interface TareaMapper {
 
 	List<TareaNombresDTO> toNombresDTOList(List<TareaEntity> entities);
 
-
+	
     @Mapping(source = "id_tarea.id", target = "id")
     @Mapping(source = "id_tarea.descripcion", target = "descripcion")
     @Mapping(source = "id_tarea.estado", target = "estado")

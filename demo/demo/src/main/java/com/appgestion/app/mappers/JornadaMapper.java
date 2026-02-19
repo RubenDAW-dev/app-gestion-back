@@ -8,7 +8,9 @@ import org.mapstruct.Named;
 import com.appgestion.app.DTO.JornadaAllDTO;
 import com.appgestion.app.DTO.JornadaDTO;
 import com.appgestion.app.DTO.JornadaNombresDTO;
+import com.appgestion.app.DTO.JornadaValidarDTO;
 import com.appgestion.app.DTO.TareaDTOTarea;
+import com.appgestion.app.DTO.TareaValidarDTO;
 import com.appgestion.app.DTO.TrabajadorNombreDTO;
 import com.appgestion.app.model.JornadaEntity;
 import com.appgestion.app.model.TareaEntity;
@@ -29,10 +31,20 @@ public interface JornadaMapper {
     @Mapping(source = "id_trabajador", target = "id_trabajador", qualifiedByName = "mapTrabajador")
     JornadaNombresDTO toNombresDto(JornadaEntity entity);
     
+    @Mapping(source = "id_tarea", target = "id_tarea", qualifiedByName = "mapTareaValidar")
+    @Mapping(source = "id_trabajador", target = "id_trabajador", qualifiedByName = "mapTrabajador")
+    JornadaValidarDTO toValidarDto(JornadaEntity entity);
+    
     @Named("mapTarea")
     default TareaDTOTarea mapTarea(TareaEntity tarea) {
         if (tarea == null) return null;
         return new TareaDTOTarea(tarea.getId(), tarea.getNombre());
+    }
+    
+    @Named("mapTareaValidar")
+    default TareaValidarDTO mapTareaValidar(TareaEntity tarea) {
+        if (tarea == null) return null;
+        return new TareaValidarDTO(tarea.getId(), tarea.getNombre(), tarea.getId_proyecto().getId());
     }
     
     @Named("mapTrabajador")

@@ -23,6 +23,7 @@ import com.appgestion.app.DTO.TareaDTO;
 import com.appgestion.app.DTO.TareaFiltro;
 import com.appgestion.app.DTO.TareaLazyDTO;
 import com.appgestion.app.DTO.TareaNombresDTO;
+import com.appgestion.app.DTO.TareaValidarDTO;
 import com.appgestion.app.services.TareaService;
 
 import lombok.AllArgsConstructor;
@@ -72,6 +73,12 @@ public class TareaResource {
 	@GetMapping("/all/nombres")
 	public ResponseEntity<List<TareaNombresDTO>> getNombresTarea(@RequestParam int id){
 		List<TareaNombresDTO> lista = tareaservice.findNombresTarea(id);
+		return ResponseEntity.ok(lista);
+	}
+	
+	@GetMapping("/all/nombres-validar")
+	public ResponseEntity<List<TareaValidarDTO>> getNombresTareaValidar(@RequestParam int id){
+		List<TareaValidarDTO> lista = tareaservice.findNombresTareaValidar(id);
 		return ResponseEntity.ok(lista);
 	}
 	

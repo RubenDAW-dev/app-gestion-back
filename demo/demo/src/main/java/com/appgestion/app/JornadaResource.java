@@ -20,6 +20,7 @@ import com.appgestion.app.DTO.JornadaAllDTO;
 import com.appgestion.app.DTO.JornadaDTO;
 import com.appgestion.app.DTO.JornadaFiltro;
 import com.appgestion.app.DTO.JornadaNombresDTO;
+import com.appgestion.app.DTO.JornadaValidarDTO;
 import com.appgestion.app.DTO.ProyectoAllDTO;
 import com.appgestion.app.services.JornadaService;
 
@@ -76,13 +77,15 @@ public class JornadaResource {
 	}
 
 	@GetMapping("/all/no_validadas")
-	public ResponseEntity<Page<JornadaNombresDTO>> getNoValidadas(@RequestParam(defaultValue = "0") int page,
+	public ResponseEntity<Page<JornadaValidarDTO>> getNoValidadas(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "5") int size) {
 		Pageable pageable = PageRequest.of(page, size);
 
-		Page<JornadaNombresDTO> lista = jornadaservice.getNoValidadas(pageable);
+		Page<JornadaValidarDTO> lista = jornadaservice.getNoValidadas(pageable);
 		return new ResponseEntity<>(lista, HttpStatus.OK);
 
 	}
+	
+	
 
 }
