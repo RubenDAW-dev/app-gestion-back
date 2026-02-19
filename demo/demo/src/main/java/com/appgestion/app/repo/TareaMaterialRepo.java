@@ -1,5 +1,7 @@
 package com.appgestion.app.repo;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,5 +22,9 @@ public interface TareaMaterialRepo extends JpaRepository<TareaMaterialEntity, Ta
 			""")
 	Page<TareaMaterialEntity> findByFiltros(@Param("id_tarea") Long id_tarea, @Param("id_material") Long id_material,
 			@Param("cantidad") int cantidad, Pageable pageable);
+
+	@Query("SELECT tm FROM TareaMaterialEntity tm " + "JOIN FETCH tm.id_material m "
+			+ "WHERE tm.id.id_tarea = :idTarea")
+	List<TareaMaterialEntity> findByTarea(@Param("idTarea") Long idTarea);
 
 }

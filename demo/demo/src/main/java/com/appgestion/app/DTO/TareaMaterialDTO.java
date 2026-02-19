@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class TareaMaterialDTO {
 private Long id_tarea;
 private Long id_material;
+private String nombre_material;
 private int cantidad;
 }

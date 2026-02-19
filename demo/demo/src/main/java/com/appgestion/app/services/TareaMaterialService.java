@@ -1,8 +1,11 @@
 package com.appgestion.app.services;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.appgestion.app.DTO.TareaMaterialDTO;
 import com.appgestion.app.mappers.TareaMaterialMapper;
@@ -111,5 +114,24 @@ public class TareaMaterialService {
 				pageable)
 				.map(tareamaterialmapper::toDto);
 	}
-
+	
+	@Transactional(readOnly = true)
+	public List<TareaMaterialDTO> findByTarea(Long idTarea) {
+	    List<TareaMaterialEntity> entidades = tareamaterialrepo.findByTarea(idTarea);
+	    
+	    for (TareaMaterialEntity tm : entidades) {
+	        System.out.println("=== DEBUG ===");
+	        System.out.println("ID embeddable: " + tm.getId());
+	        System.out.println("id_material entity: " + tm.getId_material());
+	        if (tm.getId_material() != null) {
+	            System.out.println("nombre: " + tm.getId_material().getNombre());
+	        } else {
+	            System.out.println("id_material ES NULL");
+	        }
+	    }
+	    
+	    return entidades.stream()
+	            .map(tareamaterialmapper::toDto)
+	            .toList();
+	}
 }

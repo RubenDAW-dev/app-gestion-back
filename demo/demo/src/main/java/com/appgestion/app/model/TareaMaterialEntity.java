@@ -3,6 +3,7 @@ package com.appgestion.app.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -28,7 +29,7 @@ public class TareaMaterialEntity {
 	@JoinColumn(name = "id_tarea")
 	private TareaEntity id_tarea;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@MapsId("id_material")
 	@JoinColumn(name = "id_material")
 	private MaterialEntity id_material;
