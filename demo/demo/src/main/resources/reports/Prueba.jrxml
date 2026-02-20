@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="proyecto_tareas_materiales" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="99a5f867-39eb-42a5-add6-db00ab1c5142">
+	<parameter name="idProyecto" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT 
+                p.id AS proyecto_id,
+                p.nombre AS proyecto_nombre,
+                p.descripcion AS proyecto_descripcion,
+                p.fecha_ini AS proyecto_fecha_ini,
+                p.fecha_fin AS proyecto_fecha_fin,
+                p.estado AS proyecto_estado,
+                p.margen_beneficio AS proyecto_margen,
+
+                t.id AS tarea_id,
+                t.nombre AS tarea_nombre,
+                t.descripcion AS tarea_descripcion,
+                t.fecha_ini AS tarea_fecha_ini,
+                t.fecha_fin AS tarea_fecha_fin,
+                t.estado AS tarea_estado,
+                t.horas_estimadas AS tarea_horas,
+                t.obseraciones AS tarea_observaciones,
+                t.tipo AS tarea_tipo,
+
+                m.id AS material_id,
+                m.nombre AS material_nombre,
+                m.referencia AS material_referencia,
+                m.precio_unitario AS material_precio_unitario,
+
+                tm.cantidad AS material_cantidad,
+                (tm.cantidad * m.precio_unitario) AS material_total
+
+            FROM proyectos p
+            LEFT JOIN tareas t ON t.id_proyecto = p.id
+            LEFT JOIN tareas_material tm ON tm.id_tarea = t.id
+            LEFT JOIN materiales m ON m.id = tm.id_material
+
+            WHERE p.id = $P{idProyecto}
+
+            ORDER BY t.id, m.nombre]]>
+	</queryString>
+	<field name="proyecto_nombre" class="java.lang.String"/>
+	<field name="proyecto_descripcion" class="java.lang.String"/>
+	<field name="proyecto_fecha_ini" class="java.sql.Date"/>
+	<field name="proyecto_fecha_fin" class="java.sql.Date"/>
+	<field name="proyecto_estado" class="java.lang.String"/>
+	<field name="proyecto_margen" class="java.math.BigDecimal"/>
+	<field name="tarea_id" class="java.lang.Long"/>
+	<field name="tarea_nombre" class="java.lang.String"/>
+	<field name="tarea_descripcion" class="java.lang.String"/>
+	<field name="tarea_fecha_ini" class="java.sql.Date"/>
+	<field name="tarea_fecha_fin" class="java.sql.Date"/>
+	<field name="tarea_estado" class="java.lang.String"/>
+	<field name="material_nombre" class="java.lang.String"/>
+	<field name="material_referencia" class="java.lang.String"/>
+	<field name="material_precio_unitario" class="java.math.BigDecimal"/>
+	<field name="material_cantidad" class="java.lang.Integer"/>
+	<field name="material_total" class="java.math.BigDecimal"/>
+	<variable name="totalTarea" class="java.math.BigDecimal" resetType="Group" resetGroup="GrupoTarea" calculation="Sum">
+		<variableExpression><![CDATA[$F{material_total}]]></variableExpression>
+	</variable>
+	<variable name="totalProyecto" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{material_total}]]></variableExpression>
+	</variable>
+	<variable name="beneficioProyecto" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[($V{totalProyecto} != null && $F{proyecto_margen} != null) ?
+                $V{totalProyecto}.multiply(
+                    $F{proyecto_margen}.divide(new java.math.BigDecimal(100))
+                )
+            : new java.math.BigDecimal(0)]]></variableExpression>
+	</variable>
+	<variable name="totalConBeneficio" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[($V{totalProyecto} != null && $V{beneficioProyecto} != null) ?
+                $V{totalProyecto}.add($V{beneficioProyecto})
+            : new java.math.BigDecimal(0)]]></variableExpression>
+	</variable>
+	<group name="GrupoTarea">
+		<groupExpression><![CDATA[$F{tarea_id}]]></groupExpression>
+		<groupHeader>
+			<band height="80">
+				<textField>
+					<reportElement x="0" y="0" width="515" height="20" uuid="8b644ff9-0d8d-483c-a6a4-f5acb1f022be"/>
+					<textElement textAlignment="Left">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Tarea: " + $F{tarea_nombre}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="22" width="515" height="16" uuid="2958c449-1eb5-4835-9fd4-f30f0a6e8e18"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA["Estado: " + $F{tarea_estado}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="0" y="40" width="240" height="16" uuid="800e0dce-bc13-4a5e-8e45-dbdf80aa95e9"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA["Inicio: " + $F{tarea_fecha_ini}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="260" y="40" width="240" height="16" uuid="351a85e6-90ac-475c-a785-3f5ed9bd807c"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA["Fin: " + $F{tarea_fecha_fin}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<staticText>
+					<reportElement x="300" y="4" width="100" height="18" uuid="f38ce3d5-4915-4df4-a290-f86c00441bf6"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total tarea:]]></text>
+				</staticText>
+				<textField pattern="#,##0.00 €">
+					<reportElement x="400" y="4" width="115" height="18" uuid="f34865ec-eb75-49d3-8384-772e8053aca5"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalTarea}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="100">
+			<textField>
+				<reportElement x="0" y="0" width="515" height="28" uuid="1c5593d6-81c6-409d-9e00-4646d4c893fc"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Proyecto: " + $F{proyecto_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="30" width="515" height="18" uuid="cf30d42e-a72b-4eb7-bc5c-f8a3743201c4"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proyecto_descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="54" width="240" height="16" uuid="b1be0ec5-ea07-428b-8595-6d84ed320e23"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA["Estado: " + $F{proyecto_estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="54" width="240" height="16" uuid="b1856c0b-c038-4813-86c6-820a61b99959"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA["Margen beneficio: " + $F{proyecto_margen} + "%"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="18">
+			<textField>
+				<reportElement x="0" y="0" width="180" height="16" uuid="a4c94362-1c86-4a86-a29b-08b0d740ec03"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{material_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="0" width="140" height="16" uuid="ce0bc7b1-76cd-4828-bc4a-6607438801f8"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{material_referencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="320" y="0" width="60" height="16" uuid="8178975e-c395-4d0e-8c9f-8af4e132f8e4"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{material_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 €">
+				<reportElement x="380" y="0" width="70" height="16" uuid="c3798a20-420d-4dde-ab71-fa0b028504bf"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{material_precio_unitario}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 €">
+				<reportElement x="450" y="0" width="65" height="16" uuid="a61b13d8-72dd-45ba-90b6-f3263e536f13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{material_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="70">
+			<staticText>
+				<reportElement x="300" y="6" width="100" height="18" uuid="04ea258f-d56a-41f1-9042-d76b4ba2a398"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total proyecto:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00 €">
+				<reportElement x="400" y="6" width="115" height="18" uuid="2a2676c9-67c1-4893-bd2c-a4e110d490d4"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalProyecto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="26" width="100" height="18" uuid="1824ff0a-ef94-495a-a777-e170db6d1b2f"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Beneficio:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00 €">
+				<reportElement x="400" y="26" width="115" height="18" uuid="f32b6d1a-178d-4831-a2e4-a76c61216599"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{beneficioProyecto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="46" width="100" height="18" uuid="26a050c7-eda4-4ec1-a46a-78dacbc5c56e"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total final:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00 €">
+				<reportElement x="400" y="46" width="115" height="18" uuid="eea9af39-54a7-4685-9da9-9f6b6fe84480"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalConBeneficio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

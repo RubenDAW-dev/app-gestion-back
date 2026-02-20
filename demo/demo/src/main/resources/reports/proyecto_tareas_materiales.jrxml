@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports 
+ http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+ name="factura_proyecto"
+ pageWidth="595" pageHeight="842"
+ columnWidth="515"
+ leftMargin="40" rightMargin="40"
+ topMargin="40" bottomMargin="40">
+
+    <!-- ===================== ESTILOS PROFESIONALES ===================== -->
+
+    <style name="TituloFactura" fontSize="26" isBold="true" forecolor="#2C3E50"/>
+    <style name="Etiqueta" isBold="true"/>
+    <style name="CabeceraTabla" isBold="true" backcolor="#2C3E50" forecolor="#FFFFFF" mode="Opaque" hTextAlign="Center"/>
+    <style name="DetalleTabla"/>
+    <style name="Totales" isBold="true" fontSize="13"/>
+    <style name="LineaSeparadora"/>
+
+    <!-- ===================== PARÁMETROS ===================== -->
+
+    <parameter name="idProyecto" class="java.lang.Long"/>
+
+    <!-- ===================== TITLE (CABECERA FACTURA) ===================== -->
+
+    <title>
+        <band height="130">
+
+            <!-- FACTURA -->
+            <staticText>
+                <reportElement x="0" y="0" width="300" height="40"/>
+                <textElement style="TituloFactura"/>
+                <text><![CDATA[FACTURA]]></text>
+            </staticText>
+
+            <!-- Número factura -->
+            <textField>
+                <reportElement x="350" y="10" width="165" height="20"/>
+                <textElement textAlignment="Right" style="Etiqueta"/>
+                <textFieldExpression><![CDATA["Nº Factura: F-" + $P{idProyecto}]]></textFieldExpression>
+            </textField>
+
+            <!-- Proyecto -->
+            <textField>
+                <reportElement x="0" y="50" width="515" height="20"/>
+                <textElement style="Etiqueta"/>
+                <textFieldExpression><![CDATA["Proyecto: " + $F{proyecto_nombre}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="70" width="515" height="20"/>
+                <textFieldExpression><![CDATA[$F{proyecto_descripcion}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="95" width="250" height="18"/>
+                <textFieldExpression><![CDATA["Estado: " + $F{proyecto_estado}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="265" y="95" width="250" height="18"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA["Margen beneficio: " + $F{proyecto_margen} + "%"]]></textFieldExpression>
+            </textField>
+
+            <line>
+                <reportElement x="0" y="120" width="515" height="1"/>
+            </line>
+
+        </band>
+    </title>
+
+    <!-- ===================== GRUPO TAREA ===================== -->
+
+    <group name="GrupoTarea">
+        <groupExpression><![CDATA[$F{tarea_id}]]></groupExpression>
+
+        <groupHeader>
+            <band height="45">
+
+                <textField>
+                    <reportElement x="0" y="5" width="515" height="20"/>
+                    <textElement style="Etiqueta"/>
+                    <textFieldExpression><![CDATA["Tarea: " + $F{tarea_nombre}]]></textFieldExpression>
+                </textField>
+
+                <!-- Cabecera tabla -->
+                <staticText>
+                    <reportElement x="0" y="25" width="180" height="18" style="CabeceraTabla"/>
+                    <text><![CDATA[Material]]></text>
+                </staticText>
+
+                <staticText>
+                    <reportElement x="180" y="25" width="140" height="18" style="CabeceraTabla"/>
+                    <text><![CDATA[Referencia]]></text>
+                </staticText>
+
+                <staticText>
+                    <reportElement x="320" y="25" width="60" height="18" style="CabeceraTabla"/>
+                    <text><![CDATA[Cant.]]></text>
+                </staticText>
+
+                <staticText>
+                    <reportElement x="380" y="25" width="70" height="18" style="CabeceraTabla"/>
+                    <text><![CDATA[Precio]]></text>
+                </staticText>
+
+                <staticText>
+                    <reportElement x="450" y="25" width="65" height="18" style="CabeceraTabla"/>
+                    <text><![CDATA[Total]]></text>
+                </staticText>
+
+            </band>
+        </groupHeader>
+
+        <groupFooter>
+            <band height="25">
+
+                <line>
+                    <reportElement x="0" y="2" width="515" height="1"/>
+                </line>
+
+                <staticText>
+                    <reportElement x="300" y="5" width="100" height="18"/>
+                    <textElement textAlignment="Right"/>
+                    <text><![CDATA[Subtotal tarea:]]></text>
+                </staticText>
+
+                <textField pattern="#,##0.00 €">
+                    <reportElement x="400" y="5" width="115" height="18"/>
+                    <textElement textAlignment="Right" style="Etiqueta"/>
+                    <textFieldExpression><![CDATA[$V{totalTarea}]]></textFieldExpression>
+                </textField>
+
+            </band>
+        </groupFooter>
+
+    </group>
+
+    <!-- ===================== DETAIL ===================== -->
+
+    <detail>
+        <band height="18">
+
+            <textField>
+                <reportElement x="0" y="0" width="180" height="16"/>
+                <textFieldExpression><![CDATA[$F{material_nombre}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="180" y="0" width="140" height="16"/>
+                <textFieldExpression><![CDATA[$F{material_referencia}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="320" y="0" width="60" height="16"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$F{material_cantidad}]]></textFieldExpression>
+            </textField>
+
+            <textField pattern="#,##0.00 €">
+                <reportElement x="380" y="0" width="70" height="16"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$F{material_precio_unitario}]]></textFieldExpression>
+            </textField>
+
+            <textField pattern="#,##0.00 €">
+                <reportElement x="450" y="0" width="65" height="16"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$F{material_total}]]></textFieldExpression>
+            </textField>
+
+        </band>
+    </detail>
+
+    <!-- ===================== TOTALES FINALES ===================== -->
+
+    <summary>
+        <band height="100">
+
+            <line>
+                <reportElement x="250" y="5" width="265" height="1"/>
+            </line>
+
+            <staticText>
+                <reportElement x="300" y="15" width="100" height="20"/>
+                <textElement textAlignment="Right"/>
+                <text><![CDATA[Base imponible:]]></text>
+            </staticText>
+
+            <textField pattern="#,##0.00 €">
+                <reportElement x="400" y="15" width="115" height="20"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$V{totalProyecto}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="300" y="40" width="100" height="20"/>
+                <textElement textAlignment="Right"/>
+                <text><![CDATA[Beneficio:]]></text>
+            </staticText>
+
+            <textField pattern="#,##0.00 €">
+                <reportElement x="400" y="40" width="115" height="20"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$V{beneficioProyecto}]]></textFieldExpression>
+            </textField>
+
+            <line>
+                <reportElement x="250" y="65" width="265" height="2"/>
+            </line>
+
+            <staticText>
+                <reportElement x="300" y="70" width="100" height="25"/>
+                <textElement textAlignment="Right" style="Totales"/>
+                <text><![CDATA[TOTAL FACTURA:]]></text>
+            </staticText>
+
+            <textField pattern="#,##0.00 €">
+                <reportElement x="400" y="70" width="115" height="25"/>
+                <textElement textAlignment="Right" style="Totales"/>
+                <textFieldExpression><![CDATA[$V{totalConBeneficio}]]></textFieldExpression>
+            </textField>
+
+        </band>
+    </summary>
+
+</jasperReport>

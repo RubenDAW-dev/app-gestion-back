@@ -1,5 +1,6 @@
 package com.appgestion.app;
 
+import org.springframework.http.HttpHeaders;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -25,7 +26,9 @@ import com.appgestion.app.DTO.ProyectoFiltro;
 import com.appgestion.app.DTO.ProyectoNombresDTO;
 import com.appgestion.app.DTO.ProyectoTareasDTO;
 import com.appgestion.app.services.ProyectoService;
+import com.appgestion.app.services.ReportService;
 
+import org.springframework.http.MediaType;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -34,6 +37,7 @@ import lombok.AllArgsConstructor;
 public class ProyectoResource {
 
 	private final ProyectoService proyectoservice;
+	private final ReportService reportservice;
 
 	@PostMapping("/add")
 	public ResponseEntity<ProyectoDTO> addProyecto(@RequestBody ProyectoDTO proyectodto) {
@@ -92,5 +96,22 @@ public class ProyectoResource {
 	public ResponseEntity<List<MaterialAgrupadoDTO>> getMaterialesFromProyecto(@PathVariable Long id){
 		List<MaterialAgrupadoDTO> materiales = proyectoservice.findMaterialesFromProyecto(id);
 		return ResponseEntity.ok(materiales);
+	}
+	@GetMapping("/report/{idProyecto}")
+	public ResponseEntity<byte[]> generarInformeProyecto(@PathVariable Long idProyecto) {
+	    try {
+			byte[] pdf = reportservice.generarReport("Prueba", idProyecto);
+
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.setContentType(MediaType.APPLICATION_PDF);
+	        headers.add("Content-Disposition", 
+	            "attachment; filename=proyecto_" + idProyecto + ".pdf");
+
+	        return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	    }
 	}
 }
