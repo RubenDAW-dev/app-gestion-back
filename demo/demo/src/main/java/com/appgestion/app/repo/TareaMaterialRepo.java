@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.appgestion.app.DTO.MaterialAgrupadoDTO;
 import com.appgestion.app.model.TareaMaterialEntity;
 import com.appgestion.app.model.TareasMaterialId;
 
@@ -27,4 +28,9 @@ public interface TareaMaterialRepo extends JpaRepository<TareaMaterialEntity, Ta
 			+ "WHERE tm.id.id_tarea = :idTarea")
 	List<TareaMaterialEntity> findByTarea(@Param("idTarea") Long idTarea);
 
+	@Query("SELECT new com.appgestion.app.DTO.MaterialAgrupadoDTO(" + "m, " + "SUM(CAST(tm.cantidad AS long)), "
+			+ "SUM(CAST(tm.cantidad AS double) * CAST(m.precio_unitario AS double))) " + "FROM TareaMaterialEntity tm "
+			+ "JOIN tm.id_material m " + "JOIN tm.id_tarea t " + "JOIN t.id_proyecto p " + "WHERE p.id = :proyectoId "
+			+ "GROUP BY m")
+	List<MaterialAgrupadoDTO> findMaterialesAgrupadosByProyecto(@Param("proyectoId") Long proyectoId);
 }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.appgestion.app.DTO.MaterialAgrupadoDTO;
 import com.appgestion.app.DTO.ProyectoAllDTO;
 import com.appgestion.app.DTO.ProyectoDTO;
 import com.appgestion.app.DTO.ProyectoFiltro;
@@ -16,6 +17,7 @@ import com.appgestion.app.mappers.ProyectoMapper;
 import com.appgestion.app.mappers.TareaMapper;
 import com.appgestion.app.model.ProyectoEntity;
 import com.appgestion.app.repo.ProyectoRepo;
+import com.appgestion.app.repo.TareaMaterialRepo;
 
 import lombok.AllArgsConstructor;
 
@@ -25,6 +27,7 @@ public class ProyectoService {
 	private final ProyectoRepo proyectorepo;
 	private final ProyectoMapper proyectomapper;
 	private final TareaMapper tareamapper;
+	private final TareaMaterialRepo tareaMaterialRepo;
 	
 	
 	public void addProyecto(ProyectoDTO proyectodto) {
@@ -109,6 +112,11 @@ public class ProyectoService {
 	public String findNombreProyectoById(Long id) {
 		ProyectoEntity proyecto = proyectorepo.findById(id).orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
 		return proyecto.getNombre();
+	}
+	
+	public List<MaterialAgrupadoDTO> findMaterialesFromProyecto(Long id) {
+		List<MaterialAgrupadoDTO> materiales = tareaMaterialRepo.findMaterialesAgrupadosByProyecto(id);
+		return materiales;
 	}
 
 }
