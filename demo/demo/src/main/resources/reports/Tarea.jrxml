@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="tarea_jornadas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f37aa045-6596-47c8-a70e-e8a3d7fcbe56">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
+	<style name="Titulo" fontSize="20" isBold="true"/>
+	<style name="Subtitulo" fontSize="12" isBold="true"/>
+	<style name="TablaHeader" fontSize="11" isBold="true"/>
+	<style name="TablaTexto" fontSize="10"/>
+	<parameter name="id_tarea" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT 
+            t.id AS tarea_id,
+            t.nombre AS tarea_nombre,
+            t.descripcion AS tarea_descripcion,
+            t.fecha_ini,
+            t.fecha_fin,
+
+            j.id AS jornada_id,
+            j.horas,
+            j.fecha AS jornada_fecha,
+            j.validado,
+
+            tr.id AS trabajador_id,
+            tr.nombre AS trabajador_nombre,
+            tr.apellido AS trabajador_apellido
+
+        FROM registro_jornada j
+        JOIN Trabajadores tr ON tr.id = j.id_trabajador
+        JOIN Tareas t ON t.id = j.id_tarea
+        WHERE t.id = $P{id_tarea}
+        ORDER BY j.fecha]]>
+	</queryString>
+	<field name="tarea_nombre" class="java.lang.String"/>
+	<field name="tarea_descripcion" class="java.lang.String"/>
+	<field name="fecha_ini" class="java.sql.Date"/>
+	<field name="fecha_fin" class="java.sql.Date"/>
+	<field name="jornada_fecha" class="java.sql.Date"/>
+	<field name="horas" class="java.lang.Integer"/>
+	<field name="validado" class="java.lang.Boolean"/>
+	<field name="trabajador_nombre" class="java.lang.String"/>
+	<field name="trabajador_apellido" class="java.lang.String"/>
+	<title>
+		<band height="80">
+			<textField>
+				<reportElement style="Titulo" x="0" y="0" width="555" height="30" uuid="6167bc86-a622-4e47-a268-f2cd141b8126"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["Jornadas de la Tarea: " + $F{tarea_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Subtitulo" x="0" y="35" width="555" height="20" uuid="849720c1-270f-4d47-a1f3-dee1f1af619a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{tarea_descripcion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement style="TablaHeader" x="0" y="0" width="160" height="20" uuid="64812074-4b36-4cb0-a000-3edffb489831"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Trabajador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TablaHeader" x="160" y="0" width="120" height="20" uuid="0a01b70a-2978-459b-a89c-96829a2bde4e"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TablaHeader" x="280" y="0" width="80" height="20" uuid="3ca9c788-f660-4c18-a152-29b41d66efa0"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Horas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TablaHeader" x="360" y="0" width="100" height="20" uuid="4d4576f8-bda4-4b9a-9a68-ec8a5259d5f3"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Validado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement style="TablaTexto" x="0" y="0" width="160" height="20" uuid="e9af319d-b58b-41ef-9633-5872aa40f211"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{trabajador_nombre} + " " + $F{trabajador_apellido}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="TablaTexto" x="160" y="0" width="120" height="20" uuid="92ac4439-aa08-4e13-a1f8-b2ff3b502014"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{jornada_fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TablaTexto" x="280" y="0" width="80" height="20" uuid="b770c030-ddca-4bb6-a151-58d229748f27"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{horas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TablaTexto" x="360" y="0" width="100" height="20" uuid="1ff64cef-c02c-4f3d-8e0e-eaa8a5c8db84"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{validado} ? "Sí" : "No"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

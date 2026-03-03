@@ -64,4 +64,12 @@ public class ReportService {
             return JasperExportManager.exportReportToPdf(print);
         }
     }
+
+    public byte[] generarJornada(String nombreReporte, Long idTarea) throws Exception {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("id_tarea", idTarea);
+
+        return exportPdf(nombreReporte, params);
+    }
 }
