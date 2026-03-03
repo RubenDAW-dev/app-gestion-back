@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class JornadaEntity {
 	@Id
 	@Column(nullable= false, updatable = false, name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
     @ManyToOne
